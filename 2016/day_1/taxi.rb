@@ -1,17 +1,24 @@
-module Direction
+class Direction
   NORTH = 0
   EAST = 1
   SOUTH = 2
   WEST = 3
 
-  def self.rotate(code, direction)
+  attr_reader :cardinal
+
+  def initialize
+    @cardinal = NORTH
+  end
+
+  def rotate!(code)
     shift = (code == 'L' ? -1 : 1)
-    (direction + shift) % 4
+    @cardinal = (@cardinal + shift) % 4
   end
 end
 
 class Position
-  attr_reader :x, :y, :twice_visited
+  attr_accessor :x, :y
+  attr_reader :twice_visited
 
   def initialize
     @x, @y = 0, 0
@@ -19,59 +26,71 @@ class Position
     @twice_visited = nil
   end
 
-  def forward(direction:, length:)
-    #puts "Going #{direction} x #{length}"
-    case direction
+  def incr_x
+    @x += 1
+  end
+
+  def decr_x
+    @x -= 1
+  end
+
+  def incr_y
+    @y += 1
+  end
+
+  def decr_y
+    @y -= 1
+  end
+
+  def forward!(direction:, length:)
+    case direction.cardinal
     when Direction::NORTH
-      method = :y=
-      shift = 1
+      method = :incr_y
     when Direction::SOUTH
-      method = :y=
-      shift = -1
+      method = :decr_y
     when Direction::EAST
-      method = :x=
-      shift = 1
+      method = :incr_x
     when Direction::WEST
-      method = :x=
-      shift = -1
+      method = :decr_x
     end
     length.times do
-      self.send(method, shift)
-      if @paths.include(self)
-        @twice_visited = self
+      send(method)
+      if @paths.include?([@x, @y])
+        @twice_visited = [@x, @y]
       else
-        @paths << self
-      end
+        @paths << [@x, @y]
+      end unless @twice_visited
     end
+  end
+
+  def to_s
+    "#{x}, #{y}"
   end
 end
 
 class Taxi
+  attr_reader :position
+
   def initialize
-    @direction = Direction::NORTH
+    @direction = Direction.new
     @position = Position.new
   end
 
-  def read_sequence(sequence)
+  def read_sequence!(sequence)
     steps = sequence.split(',')
     steps.each do |step|
       step.strip!
-
-      rotation_code = step[0]
-      rotate!(rotation_code)
-
-      length = step[1..-1].to_i
-      move!(length)
+      rotate!(step[0])
+      move!(step[1..-1].to_i)
     end
-    self
   end
 
   def rotate!(code)
-    @direction = Direction::rotate(code, @direction)
+    @direction.rotate!(code)
   end
 
   def move!(length)
-    @position.forward(direction: @direction, length: length)
+    @position.forward!(direction: @direction, length: length)
   end
 
   def distance
@@ -81,12 +100,12 @@ end
 
 def drive(seq, expected = nil)
   taxi = Taxi.new
-  taxi.read_sequence(seq)
-  actual = taxi.distance
-  if expected && actual != expected
-    puts "Failed sequence #{seq}: expected #{expected}, got #{actual} "
+  taxi.read_sequence!(seq)
+  distance = taxi.distance
+  if expected && distance != expected
+    puts "Failed sequence #{seq}: expected #{expected}, got #{distance} "
   else
-    puts "Drove #{actual}"
+    puts "Drove #{distance}"
   end
   if taxi.position.twice_visited
     puts "Visited #{taxi.position.twice_visited} twice"
