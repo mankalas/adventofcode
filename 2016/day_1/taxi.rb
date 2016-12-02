@@ -11,23 +11,37 @@ module Direction
 end
 
 class Position
-  attr_reader :x, :y
+  attr_reader :x, :y, :twice_visited
 
   def initialize
     @x, @y = 0, 0
+    @paths = []
+    @twice_visited = nil
   end
 
   def forward(direction:, length:)
     #puts "Going #{direction} x #{length}"
     case direction
     when Direction::NORTH
-      @y += length
+      method = :y=
+      shift = 1
     when Direction::SOUTH
-      @y -= length
+      method = :y=
+      shift = -1
     when Direction::EAST
-      @x += length
+      method = :x=
+      shift = 1
     when Direction::WEST
-      @x -= length
+      method = :x=
+      shift = -1
+    end
+    length.times do
+      self.send(method, shift)
+      if @paths.include(self)
+        @twice_visited = self
+      else
+        @paths << self
+      end
     end
   end
 end
@@ -74,6 +88,9 @@ def drive(seq, expected = nil)
   else
     puts "Drove #{actual}"
   end
+  if taxi.position.twice_visited
+    puts "Visited #{taxi.position.twice_visited} twice"
+  end
 end
 
 seq1 = "R2, L3" #5
@@ -86,3 +103,5 @@ seq3 = "R5, L5, R5, R3" #12
 drive(seq3, 12)
 seq = "R1, R3, L2, L5, L2, L1, R3, L4, R2, L2, L4, R2, L1, R1, L2, R3, L1, L4, R2, L5, R3, R4, L1, R2, L1, R3, L4, R5, L4, L5, R5, L3, R2, L3, L3, R1, R3, L4, R2, R5, L4, R1, L1, L1, R5, L2, R1, L2, R188, L5, L3, R5, R1, L2, L4, R3, R5, L3, R3, R45, L4, R4, R72, R2, R3, L1, R1, L1, L1, R192, L1, L1, L1, L4, R1, L2, L5, L3, R5, L3, R3, L4, L3, R1, R4, L2, R2, R3, L5, R3, L1, R1, R4, L2, L3, R1, R3, L4, L3, L4, L2, L2, R1, R3, L5, L1, R4, R2, L4, L1, R3, R3, R1, L5, L2, R4, R4, R2, R1, R5, R5, L4, L1, R5, R3, R4, R5, R3, L1, L2, L4, R1, R4, R5, L2, L3, R4, L4, R2, L2, L4, L2, R5, R1, R4, R3, R5, L4, L4, L5, L5, R3, R4, L1, L3, R2, L2, R1, L3, L5, R5, R5, R3, L4, L2, R4, R5, R1, R4, L3"
 drive(seq)
+seq5 = "R8, R4, R4, R8"
+drive(seq5)
