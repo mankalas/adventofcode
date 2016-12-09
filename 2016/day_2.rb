@@ -1,27 +1,77 @@
+require 'byebug'
+
+class Key
+  attr_accessor :up, :down, :left, :right, :value
+
+  def initialize(value, up: nil, down: nil, left: nil, right: nil)
+    @value, @up, @down, @left, @right = value, up, down, left, right
+  end
+
+  def to_s
+    "#{@value} (#{all_dir})"
+  end
+
+  private
+
+  def all_dir
+    [:up, :down, :left, :right].map{ |d| dir_to_s(d) }.join(', ')
+  end
+
+  def dir_to_s(symbol)
+    "#{symbol.to_s}: #{send(symbol).value if send(symbol)}"
+  end
+end
+
 class Keypad
   attr_reader :code
 
-  def initialize
-    @position = 5
+  def initialize(pad)
+    @keys = []
+    structure_pad(pad)
+    @position = @keys.find { |key| key.value == '5' }
     @code = []
+  end
+
+  def structure_pad(pad)
+    pad.chars.each { |c| @keys << Key.new(c) unless c == ' ' || c == "\n" }
+    line_number = 0
+    pad.each_line do |line|
+      char_number = 0
+      line.chars.each do |c|
+        unless c == ' ' || c == "\n"
+          key = @keys.find { |k| k.value == c }
+          up_value = line_number > 0 ? pad.lines[line_number - 1][char_number] : nil
+          down_value = line_number < pad.lines.length - 1 ? pad.lines[line_number + 1][char_number] : nil
+          left_value = char_number > 0 ? line[char_number - 2] : nil
+          right_value = char_number < line.length ? line[char_number + 2] : nil
+          key.up = @keys.find { |k| k.value == up_value }
+          key.down = @keys.find { |k| k.value == down_value }
+          key.left = @keys.find { |k| k.value == left_value }
+          key.right = @keys.find { |k| k.value == right_value }
+        end
+        char_number += 1
+      end
+      line_number += 1
+    end
+    puts @keys
   end
 
   def move(letter)
     case letter
     when 'U'
-      @position -= 3 unless @position < 4
+      @position = @position.up unless @position.up.nil?
     when 'L'
-      @position -= 1 unless [1,4,7].include?(@position)
+      @position = @position.left unless @position.left.nil?
     when 'R'
-      @position += 1 unless [3,6,9].include?(@position)
+      @position = @position.right unless @position.right.nil?
     when 'D'
-      @position += 3 unless @position > 6
+      @position = @position.down unless @position.down.nil?
     end
   end
 
   def read_line(line)
     line.chars.each { |c| move(c) }
-    @code << @position
+    @code << @position.value
   end
 end
 
@@ -29,7 +79,9 @@ seq1 = "ULL
 RRDDD
 LURDL
 UUUUD"
-key1 = Keypad.new
+key1 = Keypad.new("123
+456
+789")
 seq1.each_line { |line| key1.read_line(line) }
 puts key1.code.join
 seq = "ULUULLUULUUUUDURUUULLDLDDRDRDULULRULLRLULRUDRRLDDLRULLLDRDRRDDLLLLDURUURDUDUUURDRLRLLURUDRDULURRUDLRDRRLLRDULLDURURLLLULLRLUDDLRRURRLDULRDDULDLRLURDUDRLLRUDDRLRDLLDDUURLRUDDURRLRURLDDDURRDLLDUUDLLLDUDURLUDURLRDLURURRLRLDDRURRLRRDURLURURRRULRRDLDDDDLLRDLDDDRDDRLUUDDLDUURUULDLUULUURRDRLDDDULRRRRULULLRLLDDUDRLRRLLLLLDRULURLLDULULLUULDDRURUDULDRDRRURLDRDDLULRDDRDLRLUDLLLDUDULUUUUDRDRURDDULLRDRLRRURLRDLRRRRUDDLRDDUDLDLUUDLDDRRRDRLLRLUURUDRUUULUDDDLDUULULLRUDULULLLDRLDDLLUUDRDDDDRUDURDRRUUDDLRRRRURLURLD
@@ -37,6 +89,11 @@ LDLUDDLLDDRLLDLDRDDDDDUURUDDDUURLRLRLDULLLDLUDDDULLDUDLRUUDDLUULLDRLDDUDLUDDLURR
 DDLDRLLDRRDRRLLUUURDDULRDUDRDRUDULURLLDDLRRRUDRDLDLURRRULUDRDLULLULLDUUDRLRUDDLRRURRUULRLDLLLDLRLLLURLLLURLLRDDLULLDUURLURDLLDLDUDLDRUUUDDLLDRRRRRUDRURUURRRDRUURDRDDRLDUUULUDUDRUDLLLLDRDRURRRDUUURLDLRLRDDDRLUDULDRLLULRDLDURDLDURUUDDULLULRDDRLRUURLLLURDRUURUUDUUULRDUDDRDURRRDUUDRRRUDRDLRURDLLDDDURLLRRDDDDLDULULDRLDRULDDLRRRLUDLLLLUDURRRUURUUULRRLDUURDLURRLRLLRDLRDDRDDLRDLULRUUUDDDUDRRURDDURURDDUDLURUUURUUUUDURDDLDRDULDRLDRLLRLRRRLDRLLDDRDLDLUDDLUDLULDLLDRDLLRDULDUDDULRRRUUDULDULRRURLRDRUDLDUDLURRRDDULRDDRULDLUUDDLRDUURDRDR
 URDURRRRUURULDLRUUDURDLLDUULULDURUDULLUDULRUDUUURLDRRULRRLLRDUURDDDLRDDRULUUURRRRDLLDLRLRULDLRRRRUDULDDURDLDUUULDURLLUDLURULLURRRDRLLDRRDULUDDURLDULLDURLUDUULRRLLURURLDLLLURDUDRLDDDRDULLUDDRLDDRRRLDULLLLDUURULUDDDURUULUUUDURUDURDURULLLDRULULDRRLDRLDLRLRUDUDURRLURLRUUDRRDULULDLLDRDRRRDUDUURLDULLLURRDLUDDLDDRDDUDLDDRRRUDRULLURDDULRLDUDDDRULURLLUDLLRLRRDRDRRURUUUURDLUURRDULLRDLDLRDDRDRLLLRRDDLDDDDLUDLRLULRRDDRDLDLUUUDLDURURLULLLDDDULURLRRURLDDRDDLD
 UDUULLRLUDLLUULRURRUUDDLLLDUURRURURDDRDLRRURLLRURLDDDRRDDUDRLLDRRUDRDRDDRURLULDDLDLRRUDDULLRLDDLRURLUURUURURDLDUDRLUUURRRLUURUDUDUUDDLDULUULRLDLLURLDRUDRLLRULURDLDDLLULLDRRUUDDLRRRUDDLRDRRRULDRDDRRULLLUDRUULURDUDRDLRRLDLRLRLDDULRRLULUUDDULDUDDULRRURLRDRDURUDDDLLRLDRDRULDDLLRLLRDUDDDDDDRLRLLDURUULDUUUDRURRLLRLDDDDRDRDUURRURDRDLLLUDDRDRRRDLUDLUUDRULURDLLLLLRDUDLLRULUULRLULRURULRLRRULUURLUDLDLLUURDLLULLLDDLRUDDRULRDLULRUURLDRULRRLULRLRULRDLURLLRURULRDRDLRRLRRDRUUURURULLLDDUURLDUDLLRRLRLRULLDUUUULDDUUU"
-key = Keypad.new
+key = Keypad.new("
+    1
+  2 3 4
+5 6 7 8 9
+  A B C
+    D")
 seq.each_line { |line| key.read_line(line) }
-puts key.code.join
+puts key.code.join #should be 74cD2
