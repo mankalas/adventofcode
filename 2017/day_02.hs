@@ -21,17 +21,15 @@ rowToInts :: String -> [Int]
 rowToInts row = map read $ words row
 
 rowDiff :: [Int] -> Int
-rowDiff ints = (maximum ints) - (minimum ints)
+rowDiff ints = maximum ints - minimum ints
 
 dividerCheck :: Int -> [Int] -> Int
 dividerCheck _ [] = 0
 dividerCheck n (x:xs) =
-    let qr = quotRem n x in
-      let div = fst qr
-          rem = snd qr in
-        if rem == 0
-        then div
-        else dividerCheck n xs
+  let (div, rem) = quotRem n x in
+    if rem == 0
+    then div
+    else dividerCheck n xs
 
 rowDividersRotate :: Int -> [Int] -> Int
 rowDividersRotate 0 _ = 0
@@ -45,14 +43,14 @@ rotate :: [a] -> [a]
 rotate list = zipWith const (drop 1 (cycle list)) list
 
 rowDividers :: [Int] -> Int
-rowDividers row = rowDividersRotate (length row) row
+rowDividers row = head [a `div` b | a <- row, b <- row, a `mod` b == 0] --rowDividersRotate (length row) row
 
 checksum :: String -> Int
-checksum content = foldr (+) 0 $ map rowDiff $ map rowToInts $ lines content
+checksum content = sum $ map (rowDiff . rowToInts) $ lines content
 -- 47136
 
 checksum2 :: String -> Int
-checksum2 content = foldr (+) 0 $ map rowDividers $ map rowToInts $ lines content
+checksum2 content = sum $ map rowDividers $ map rowToInts $ lines content
 -- 250
 
 --
