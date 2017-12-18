@@ -1,4 +1,4 @@
-module Main where
+module Day06 where
 
 import Data.List
 import Data.Maybe
@@ -45,13 +45,13 @@ emptyBank index banks =
 
 redistrib_ :: Int -> [[Int]] -> [Int] -> Int
 redistrib_ n old_banks banks =
-  let bank = trace("Banks: " ++ show banks) select banks
-      count_blocks = trace("Selected bank: " ++ show bank) banks !! bank
+  let bank = select banks
+      count_blocks = banks !! bank
       count_banks = length banks
       (d, m) = count_blocks `divMod` count_banks
       new_banks = spreadRest bank m $ map (+ d) $ emptyBank bank banks in
     if new_banks `elem` old_banks
-    then n
+    then trace(show $ findIndex (\e -> e == new_banks) old_banks) n
     else redistrib_ (n + 1) (new_banks:old_banks) new_banks
 
 redistrib :: [Int] -> Int
@@ -59,6 +59,3 @@ redistrib l = redistrib_ 1 [l] l
 
 input = "11 11 13 7 0 15 5 5 4 4 1 1 7 1 15 11"
 test_input = "0 2 7 0" -- works
-
-main :: IO ()
-main = putStrLn $ show $ redistrib $ map read $ words input

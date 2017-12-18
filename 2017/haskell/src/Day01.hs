@@ -1,4 +1,4 @@
-module Main where
+module Day01 where
 
 import Data.Char
 
@@ -34,8 +34,3 @@ sumCaptchaRotate n string =
 sumCaptcha2 :: String -> Int
 sumCaptcha2 string = sumCaptchaRotate (length string) string
 -- 982
-
---
-
-main :: IO ()
-main = putStrLn $ show $ sumCaptcha2 captcha

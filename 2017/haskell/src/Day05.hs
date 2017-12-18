@@ -1,3 +1,5 @@
+module Day05 where
+
 increment :: Int -> Int -> [Int] -> [Int]
 increment pos offset list =
   let (a, z) = splitAt pos list in a ++ (head z + offset : tail z)
@@ -17,9 +19,3 @@ move pos n f l =
     then
       let incr = f offset in move next_pos (n + 1) f (increment pos incr l)
     else n + 1
-
---
-
-main :: IO ()
-main = do { input <- readFile "day_05.input"; print $ move 0 0 plus1 $ map read $ lines input }
-

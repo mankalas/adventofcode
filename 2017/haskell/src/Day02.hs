@@ -1,4 +1,4 @@
-module Main where
+module Day02 where
 
 spreadsheet = "4347 3350 196 162 233 4932 4419 3485 4509 4287 4433 4033 207 3682 2193 4223\n\
               \648 94 778 957 1634 2885 1964 2929 2754 89 972 112 80 2819 543 2820\n\
@@ -52,8 +52,3 @@ checksum content = sum $ map (rowDiff . rowToInts) $ lines content
 checksum2 :: String -> Int
 checksum2 content = sum $ map rowDividers $ map rowToInts $ lines content
 -- 250
-
---
-
-main :: IO ()
-main = putStrLn $ show $ checksum2 spreadsheet

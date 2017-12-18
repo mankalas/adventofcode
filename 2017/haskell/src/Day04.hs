@@ -1,4 +1,4 @@
-module Main where
+module Day04 where
 
 import Data.List
 
@@ -15,6 +15,3 @@ allNonAna l =
 
 countValid :: ([String] -> Bool) -> String -> Int
 countValid valid input = length [ line | line <- lines input, valid $ words line]
-
-main :: IO ()
-main = do { input <- readFile "day_04.input"; print $ countValid allNonAna input }
