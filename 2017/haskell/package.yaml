@@ -46,3 +46,6 @@ tests:
     - -with-rtsopts=-N
     dependencies:
     - haskell
+    - tasty
+    - tasty-hunit
+    - HUnit
