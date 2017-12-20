@@ -15,3 +15,12 @@ allNonAna l =
 
 countValid :: ([String] -> Bool) -> String -> Int
 countValid valid input = length [ line | line <- lines input, valid $ words line]
+
+
+-- exports
+
+part1 :: String -> String
+part1 input = show $ countValid allUnique input
+
+part2 :: String -> String
+part2 input = show $ countValid allNonAna input

@@ -19,3 +19,11 @@ move pos n f l =
     then
       let incr = f offset in move next_pos (n + 1) f (increment pos incr l)
     else n + 1
+
+-- exports
+
+part1 :: String -> String
+part1 input = show $ move 0 0 plus1 $ map read $ lines input
+
+part2 :: String -> String
+part2 input = show $ move 0 0 pom $ map read $ lines input

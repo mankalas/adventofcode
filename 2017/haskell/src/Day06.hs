@@ -57,5 +57,10 @@ redistrib_ n old_banks banks =
 redistrib :: [Int] -> Int
 redistrib l = redistrib_ 1 [l] l
 
-input = "11 11 13 7 0 15 5 5 4 4 1 1 7 1 15 11"
-test_input = "0 2 7 0" -- works
+-- exports
+
+part1 :: String -> String
+part1 input = show $ redistrib $ map read $ words input
+
+part2 :: String -> String
+part2 input = "42"

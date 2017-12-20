@@ -1,10 +1,10 @@
 name:                haskell
 version:             0.1.0.0
-github:              "githubuser/haskell"
+github:              "mankalas/adventofcode"
 license:             BSD3
-author:              "Author name here"
-maintainer:          "example@example.com"
-copyright:           "2017 Author name here"
+author:              "Vincent boucheny"
+maintainer:          "mankalas@gmail.com"
+copyright:           "2017 Vincent Boucheny"
 
 extra-source-files:
 - README.md
