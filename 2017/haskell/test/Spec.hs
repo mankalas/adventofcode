@@ -34,7 +34,7 @@ day02_2 :: TestTree
 day02_2 = dayTestCase "02" 2 (Day02.part2, "250")
 
 day03_1 :: TestTree
-day03_1 = dayTestCase "03" 1 (Day03.part1, "")
+day03_1 = dayTestCase "03" 1 (Day03.part1, "419")
 
 day03_2 :: TestTree
 day03_2 = dayTestCase "03" 2 (Day03.part2, "")
