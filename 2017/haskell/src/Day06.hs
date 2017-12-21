@@ -1,66 +1,47 @@
-module Day06 where
+module Day06 (part1, part2) where
+
+import Common
 
 import Data.List
 import Data.Maybe
-import Debug.Trace
+import qualified Data.Vector as V
 
-select :: [Int] -> Int
-select l =
-  let max = maximum l
-      index = findIndex (\e -> e == max) l in
-    fromMaybe 0 index
-
-increment :: Int -> Int -> [Int] -> [Int]
-increment pos offset list =
-  let (a, z) = splitAt pos list in a ++ (head z + offset : tail z)
-
-can_has :: Int -> Int -> [Int] -> Int -> Bool
+can_has :: Int -> Int -> V.Vector (Int) -> Int -> Bool
 can_has start mod banks e =
-  if mod <= 0
-  then False
-  else
-    let count_banks = length banks
-        end_length = count_banks - start
-        rest_end = min mod end_length
-        rest_beginning = mod - rest_end in
-      (e >= start && e < start + rest_end) || (e < rest_beginning)
-
-boolToInt True = 1
-boolToInt False = 0
-
-nextBank n banks = (n + 1) `mod` (length banks)
-
-spreadRest :: Int -> Int -> [Int] -> [Int]
-spreadRest start 1 banks = increment start 1 banks
-spreadRest start mod banks =
   let count_banks = length banks
-      next_bank = nextBank start banks
-      spread_list = map (boolToInt . can_has next_bank mod banks) [0..count_banks - 1] in
-    zipWith (+) spread_list banks
+      end_length = count_banks - start
+      rest_end = min mod end_length
+      rest_beginning = mod - rest_end in
+    mod > 0 && ((e >= start && e < start + rest_end) || (e < rest_beginning))
 
-emptyBank :: Int -> [Int] -> [Int]
-emptyBank index banks =
-  let (a,z) = splitAt index banks in
-    a ++ (0:tail z)
+spreadRest :: Int -> Int -> V.Vector (Int) -> V.Vector (Int)
+spreadRest start rest banks =
+  let count_banks = V.length banks
+      next_bank = (start + 1) `mod` (length banks)
+      spread_list = Prelude.map (fromEnum . can_has next_bank rest banks) [0..count_banks - 1] in
+    V.zipWith (+) (V.fromList spread_list) banks
 
-redistrib_ :: Int -> [[Int]] -> [Int] -> Int
+emptyBank :: Int -> V.Vector (Int) -> V.Vector (Int)
+emptyBank index banks = banks V.// [(index, 0)]
+
+redistrib_ :: Int -> [V.Vector (Int)] -> V.Vector (Int) -> (Int, Int)
 redistrib_ n old_banks banks =
-  let bank = select banks
-      count_blocks = banks !! bank
+  let bank = V.maxIndex banks
+      count_blocks = banks V.! bank
       count_banks = length banks
       (d, m) = count_blocks `divMod` count_banks
-      new_banks = spreadRest bank m $ map (+ d) $ emptyBank bank banks in
+      new_banks = spreadRest bank m $ V.map (+ d) $ emptyBank bank banks in
     if new_banks `elem` old_banks
-    then trace(show $ findIndex (\e -> e == new_banks) old_banks) n
+    then (n, (+) 1 $ fromMaybe 0 $ findIndex (\e -> e == new_banks) old_banks)
     else redistrib_ (n + 1) (new_banks:old_banks) new_banks
 
-redistrib :: [Int] -> Int
+redistrib :: V.Vector (Int) -> (Int, Int)
 redistrib l = redistrib_ 1 [l] l
 
 -- exports
 
 part1 :: String -> String
-part1 input = show $ redistrib $ map read $ words input
+part1 input = show $ fst $ redistrib $ V.fromList $ map read $ words input
 
 part2 :: String -> String
-part2 input = "42"
+part2 input = show $ snd $ redistrib $ V.fromList $ map read $ words input

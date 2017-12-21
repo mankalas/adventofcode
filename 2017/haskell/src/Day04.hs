@@ -1,26 +1,14 @@
-module Day04 where
+module Day04 (part1, part2) where
+
+import Common
 
 import Data.List
-
-allUnique :: Eq a => [a] -> Bool
-allUnique [] = True
-allUnique (x:xs) = (not $ elem x xs) && allUnique xs
--- 325
-
-allNonAna :: [String] -> Bool
-allNonAna [] = True
-allNonAna l =
-  let x:xs = map sort l in
-    (not $ elem x xs) && allNonAna xs
-
-countValid :: ([String] -> Bool) -> String -> Int
-countValid valid input = length [ line | line <- lines input, valid $ words line]
-
+import Data.List.Unique
 
 -- exports
 
 part1 :: String -> String
-part1 input = show $ countValid allUnique input
+part1 input = show $ length [ line | line <- lines input, allUnique $ words line]
 
 part2 :: String -> String
-part2 input = show $ countValid allNonAna input
+part2 input = show $ length [ line | line <- lines input, allUnique $ map sort $ words line]

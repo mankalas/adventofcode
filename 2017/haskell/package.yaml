@@ -27,6 +27,8 @@ library:
   dependencies:
     - split
     - containers
+    - Unique
+    - vector
 
 executables:
   haskell-exe:
