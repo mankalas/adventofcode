@@ -1,7 +1,5 @@
 module Common where
 
-import Debug.Trace
-
 import Data.Vector as V
 
 rowToInts :: String -> [Int]
