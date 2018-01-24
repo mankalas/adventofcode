@@ -116,6 +116,47 @@ treeHolder = Tree "" (-1) []
 pick :: Tree -> String
 pick (Tree _ _ (x:_)) =
   let (Tree n _ _) = x in n
+treeWeight :: Tree -> Int
+treeWeight (Tree _ w []) = w
+treeWeight (Tree _ w c)  = w + (sum $ map treeWeight c)
+
+allIdentical :: Eq a => [a] -> Bool
+allIdentical l@(x:xs) = countElem x l == length l
+
+newWeight :: Int -> Tree -> Int -> Int
+newWeight source (Tree _ w _) target =
+  if source > target
+  then w - (source - target)
+  else w + (target - source)
+
+wrongWeight :: [Int] -> Int
+wrongWeight l =
+  case find ((==) 1 . fst) $ occurrences l of
+    Nothing -> error("No wrong weight in " ++ show l)
+    Just (x, [y]) -> y
+
+rightWeight :: [Int] -> Int
+rightWeight l =
+  case find ((/=) 1 . fst) $ occurrences l of
+    Nothing -> error("There must be a right weight in " ++ show l)
+    Just (x, y) -> head y
+
+treeWithWeight :: [Tree] -> Int -> Tree
+treeWithWeight l i =
+  case find (\t -> i == treeWeight t) l of
+    Nothing -> error("No tree with given weight " ++ show i ++ " found")
+    Just t -> t
+    where hasWeight i (Tree _ w _) = w == i
+
+fixWeight :: Tree -> Int -> Int
+fixWeight t@(Tree _ w c) pw =
+  let cw = map treeWeight c in
+    if allIdentical cw
+    then newWeight (w + sum cw) t pw
+    else
+      let rw = rightWeight cw
+          ww = wrongWeight cw in
+        fixWeight (treeWithWeight c ww) (rightWeight cw)
 
 tree :: String -> Tree
 tree input = buildTree $ buildMap $ parseFile input
