@@ -78,18 +78,29 @@ updateRegister :: Registers -> Register -> Operation -> Int -> Registers
 updateRegister regs reg ope val =
   case Map.lookup reg regs of
     Nothing -> Map.insert reg (o 0 val) regs
-    Just _  -> Map.adjust (\n -> o n val) reg regs
+    Just x  -> updateWithMax regs reg (o x val)--Map.adjust (\n -> o n val) reg regs --
   where o = case ope of
           INC -> (+)
           DEC -> (-)
+
+updateWithMax :: Registers -> Register -> Int -> Registers
+updateWithMax regs reg new =
+  if (fromJust $ Map.lookup "max" regs) < new
+  then Map.insert "max" new $ Map.insert reg new regs
+  else Map.insert reg new regs
 
 maxReg :: Registers -> Int
 maxReg r = maximum $ Map.elems r
 
 exec :: Program -> Int
 exec p =
-  let final_state = foldl process Map.empty p in
-    maxReg final_state
+  let final_state = foldl process (Map.singleton "max" 0) p in
+    maxReg $ Map.delete "max" final_state
+
+execWithMax :: Program -> Int
+execWithMax p =
+  let final_state = foldl process (Map.singleton "max" 0) p in
+    fromJust $ Map.lookup "max" final_state
 
 process :: Registers -> Instruction -> Registers
 process r (reg, ope, val, cond)
@@ -124,4 +135,4 @@ part1 :: String -> String
 part1 input = show $ exec $ parseProgram input
 
 part2 :: String -> String
-part2 input = "42"
+part2 input = show $ execWithMax $ parseProgram input
