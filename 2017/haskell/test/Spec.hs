@@ -10,6 +10,7 @@ import Day04
 import Day05
 import Day06
 import Day07
+import Day08
 
 tests = [
   -- day01_1, day01_2,
@@ -18,7 +19,8 @@ tests = [
   -- day04_1, day04_2,
   -- day05_1, day05_2,
   -- day06_1, day06_2,
-  day07_1, day07_2
+  -- day07_1, day07_2
+  day08_1, day08_2
   ]
 
 -- tests
@@ -64,6 +66,12 @@ day07_1 = dayTestCase "07" 1 (Day07.part1, "xegshds")
 
 day07_2 :: TestTree
 day07_2 = dayTestCase "07" 2 (Day07.part2, "299")
+
+day08_1 :: TestTree
+day08_1 = dayTestCase "08" 1 (Day08.part1, "3880")
+
+day08_2 :: TestTree
+day08_2 = dayTestCase "08" 2 (Day08.part2, "aq")
 
 -- helpers
 

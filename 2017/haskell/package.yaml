@@ -30,6 +30,7 @@ library:
     - Unique
     - vector
     - parsec
+    - either-unwrap
 
 executables:
   haskell-exe:
