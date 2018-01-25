@@ -3,6 +3,9 @@ module Main where
 import Test.Tasty
 import Test.Tasty.HUnit
 
+import qualified Data.Vector as V
+
+import Common
 import Day01
 import Day02
 import Day03
@@ -12,8 +15,10 @@ import Day06
 import Day07
 import Day08
 import Day09
+import Day10
 
 tests = [
+  circular_test,
   -- day01_1, day01_2,
   -- day02_1, day02_2,
   -- day03_1, day03_2,
@@ -22,10 +27,19 @@ tests = [
   -- day06_1, day06_2,
   -- day07_1, day07_2,
   -- day08_1, day08_2,
-  day09_1, day09_2
+  -- day09_1, day09_2,
+  day10_1, day10_2
   ]
 
 -- tests
+
+circular_test :: TestTree
+circular_test = testCase "Circular list" $ do
+  assertEqual "Classic " "[0,2,1]" $ show $ Common.circularReverse (V.fromList [0,1,2]) 1 2
+  assertEqual "Circular" "[2,1,0]" $ show $ Common.circularReverse (V.fromList [0,1,2]) 2 2
+  assertEqual "Circular" "[4,3,0,1,2]" $ show $ Common.circularReverse (V.fromList [2,1,0,3,4]) 3 4
+  assertEqual "Circular" "[4,3,0,1,2]" $ show $ Common.circularReverse (V.fromList [4,3,0,1,2]) 4 1
+  assertEqual "Circular" "[3,4,2,1,0]" $ show $ Common.circularReverse (V.fromList [4,3,0,1,2]) 1 5
 
 day01_1 :: TestTree
 day01_1 = dayTestCase "01" 1 (Day01.part1, "1047")
@@ -80,6 +94,12 @@ day09_1 = dayTestCase "09" 1 (Day09.part1, "9662")
 
 day09_2 :: TestTree
 day09_2 = dayTestCase "09" 2 (Day09.part2, "4903")
+
+day10_1 :: TestTree
+day10_1 = dayTestCase "10" 1 (Day10.part1, "54675")
+
+day10_2 :: TestTree
+day10_2 = dayTestCase "10" 2 (Day10.part2, "4903")
 
 -- helpers
 
