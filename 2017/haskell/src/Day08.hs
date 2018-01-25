@@ -1,9 +1,9 @@
 module Day08 (part1, part2) where
 
+import Parser
+
 import Text.ParserCombinators.Parsec
-import Text.ParserCombinators.Parsec.Error
 import Text.Parsec.Char
-import Control.Monad (ap)
 
 import Debug.Trace
 
@@ -28,12 +28,12 @@ program = do
 instruction :: GenParser Char st Instruction
 instruction = do
   reg <- register
-  _   <- space
+  space
   ope <- operation
-  _   <- space
+  space
   val <- int
   con <- condition
-  _   <- endOfLine
+  endOfLine
   return (reg, ope, val, con)
 
 register :: GenParser Char st Register
@@ -44,24 +44,13 @@ operation =
   do { string "inc"; return INC } <|>
   do { string "dec"; return DEC }
 
-int :: GenParser Char st Int
-int = ap sign nat
-
-sign :: Num a => CharParser st (a -> a)
-sign = (char '-' >> return negate) <|> (optional (char '+') >> return id)
-
-nat :: CharParser st Int
-nat =
-  do { char '0' >> return 0 } <|>
-  do { n <- many1 digit; return (read n) }
-
 condition :: GenParser Char st Condition
 condition = do
-  _   <- string " if "
+  string " if "
   reg <- register
-  _   <- space
+  space
   ope <- operator
-  _   <- space
+  space
   val <- int
   return (reg, ope, val)
 

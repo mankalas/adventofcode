@@ -2,16 +2,69 @@ module Day07 (part1, part2) where
 
 import Parser
 
+import Text.ParserCombinators.Parsec
+import Text.Parsec.Char
+
 import Debug.Trace
 
+import Data.Either
 import Data.Maybe
 import Data.List
 import Data.List.Unique
 import qualified Data.Map.Strict as Map
 
-type LeavesDef = Map.Map String (Int, [String])
-
 data Tree = Tree String Int [Tree] | Void deriving (Show)
+type LeavesDef = Map.Map String (Int, [String])
+type LeafDef = (String, Int, [String])
+
+-- Parser
+
+file :: GenParser Char st [LeafDef]
+file = do
+  result <- many line
+  eof
+  return result
+
+line :: GenParser Char st LeafDef
+line = do
+  n <- many alphaNum
+  _ <- char ' '
+  w <- weight
+  c <- children
+  _ <- endOfLine
+  return (n, w, c)
+
+weight :: GenParser Char st Int
+weight = do
+  _ <- char '('
+  w <- many digit
+  _ <- char ')'
+  return $ read w
+
+children :: GenParser Char st [String]
+children = do
+  first <- child
+  next <- remainingChildren
+  if first == "" then return [] else return (first:next)
+
+child :: GenParser Char st String
+child = try ( do
+                _ <- string " -> "
+                c <- many (noneOf ",\n")
+                return c
+            ) <|> many (noneOf ",\n")
+
+remainingChildren :: GenParser Char st [String]
+remainingChildren = (string ", " >> children) <|> return []
+
+parseTree :: String -> [LeafDef]
+parseTree input =
+  let result = parse file "(unknown)" input in
+    if isLeft result
+    then error("parse error")
+    else fromRight [] result
+
+-- Tree
 
 treeHasName :: String -> Tree -> Bool
 treeHasName s (Tree n _ c) = (n == s) || (or $ map (treeHasName s) c)
@@ -50,7 +103,7 @@ buildOrphan m t n =
       Nothing -> Tree n weight $ map (buildOrphan m t) children
       Just x  -> x
 
-buildMap :: [Parser.LeafDef] -> LeavesDef
+buildMap :: [LeafDef] -> LeavesDef
 buildMap result = foldl (\m (n, w, c) -> Map.insert n (w, c) m) Map.empty $ result
 
 treeWeight :: Tree -> Int
@@ -96,7 +149,7 @@ fixWeight t@(Tree _ w c) pw =
 
 tree :: String -> Tree
 tree input =
-  let (Tree _ _ c) = buildTree $ buildMap $ Parser.parseFile input in
+  let (Tree _ _ c) = buildTree $ buildMap $ parseTree input in
     head c
 
 -- exports
