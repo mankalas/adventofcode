@@ -99,7 +99,7 @@ day10_1 :: TestTree
 day10_1 = dayTestCase "10" 1 (Day10.part1, "54675")
 
 day10_2 :: TestTree
-day10_2 = dayTestCase "10" 2 (Day10.part2, "4903")
+day10_2 = dayTestCase "10" 2 (Day10.part2, "a7af2706aa9a09cf5d848c1e6605dd2a")
 
 -- helpers
 

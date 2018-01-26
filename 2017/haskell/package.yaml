@@ -29,6 +29,7 @@ library:
     - containers
     - Unique
     - vector
+    - vector-split
     - parsec
     - either-unwrap
 
