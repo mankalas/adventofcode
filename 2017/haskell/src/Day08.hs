@@ -111,17 +111,10 @@ op Day08.LE = (<=)
 op Day08.EQ = (==)
 op Day08.NE = (/=)
 
-parseProgram :: String -> Program
-parseProgram input =
-  let p = parse program "(unknown)" input in
-    if isLeft p
-    then error(show $ fromLeft p)
-    else fromRight p
-
 -- export
 
 part1 :: String -> String
-part1 input = show $ exec $ parseProgram input
+part1 input = show $ exec $ parseInput program input
 
 part2 :: String -> String
-part2 input = show $ execWithMax $ parseProgram input
+part2 input = show $ execWithMax $ parseInput program input

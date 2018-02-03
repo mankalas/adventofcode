@@ -18,9 +18,6 @@ type SetI = S.Set (Int)
 
 -- parser
 
-parsePipes :: String -> [Pipe]
-parsePipes = parseInput pipes
-
 pipes :: GenParser Char () [Pipe]
 pipes = do
   p <- many pipe
@@ -67,7 +64,7 @@ buildGroups_ m s =
 -- export
 
 part1 :: String -> String
-part1 input = show $ S.size $ buildSet $ buildMap $ parsePipes input
+part1 input = show $ S.size $ buildSet $ buildMap $ parseInput pipes input
 
 part2 :: String -> String
-part2 input = show $ length $ buildGroups $ buildMap $ parsePipes input
+part2 input = show $ length $ buildGroups $ buildMap $ parseInput pipes input

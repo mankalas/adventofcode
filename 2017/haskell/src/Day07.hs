@@ -57,13 +57,6 @@ child = try ( do
 remainingChildren :: GenParser Char st [String]
 remainingChildren = (string ", " >> children) <|> return []
 
-parseTree :: String -> [LeafDef]
-parseTree input =
-  let result = parse file "(unknown)" input in
-    if isLeft result
-    then error("parse error")
-    else fromRight [] result
-
 -- Tree
 
 treeHasName :: String -> Tree -> Bool
@@ -149,7 +142,7 @@ fixWeight t@(Tree _ w c) pw =
 
 tree :: String -> Tree
 tree input =
-  let (Tree _ _ c) = buildTree $ buildMap $ parseTree input in
+  let (Tree _ _ c) = buildTree $ buildMap $ parseInput file input in
     head c
 
 -- exports
