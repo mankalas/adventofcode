@@ -15,4 +15,6 @@ nat =
   do { char '0' >> return 0 } <|>
   do { n <- many1 digit; return (read n) }
 
+parseInput :: GenParser Char () a -> String -> a
+parseInput p = (either (error . show) id) . (parse p "(unknown)")
 
