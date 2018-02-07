@@ -19,14 +19,14 @@ steps sq =
   let l = length sq
       n = l `div` 8
       m = n * 2
-      sq2 = last sq : init sq
+      sq_shift = last sq:init sq
       nm = [n..m]
       mn = reverse nm
       steps = take l $ cycle $ init $ mn ++ tail nm in
-    zip sq2 steps
+    zip sq_shift steps
 
 neighbours :: Coord -> [Coord]
-neighbours (x,y) = [ (x + a, y + b) | a <- l, b <- l, (a, b) /= (0,0) ]
+neighbours (x, y) = [ (x + a, y + b) | a <- l, b <- l, (a, b) /= (0, 0) ]
   where l = [-1..1]
 
 compute :: Coord -> Grid -> Int
@@ -57,7 +57,9 @@ build :: Int -> Coord -> Grid -> Int
 build n coord grid =
   let val = compute coord grid
       next = nextCoord coord grid in
-    if val > n then val else build n next (Map.insert coord val grid)
+    if val > n
+    then val
+    else build n next (Map.insert coord val grid)
 
 -- exports
 

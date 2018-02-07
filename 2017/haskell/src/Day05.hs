@@ -2,28 +2,32 @@ module Day05 (part1, part2) where
 
 import Common
 
-import Data.Vector as V
+import qualified Data.Vector as V
 
-plus1 :: Int -> Int
-plus1 _ = 1
+type OffsetSucc = Int -> Int
 
-pom :: Int -> Int
-pom n | n >= 3 = -1
-pom _ = 1
+pom :: OffsetSucc
+pom n
+  | n >= 3    = -1
+  | otherwise =  1
 
-move :: Int -> Int -> (Int -> Int) -> V.Vector (Int) -> Int
+move :: Int -> Int -> OffsetSucc -> VInt -> Int
 move pos n f v =
-  let offset = v ! pos
+  let offset = v V.! pos
       next_pos = pos + offset in
-    if next_pos < 0 || next_pos >= V.length v
+    if next_pos `elem` [0..V.length v]
     then n + 1
     else
-      let incr = f offset in move next_pos (n + 1) f (increment pos incr v)
+      let incr = f offset in
+        move next_pos (n + 1) f (increment pos incr v)
+
+countSteps :: OffsetSucc -> String -> String
+countSteps o_succ = show . (move 0 0 o_succ) . V.fromList . map read . lines
 
 -- exports
 
 part1 :: String -> String
-part1 input = show $ move 0 0 plus1 $ V.fromList (Prelude.map read $ lines input)
+part1 = countSteps $ const 1
 
 part2 :: String -> String
-part2 input = show $ move 0 0 pom $ V.fromList (Prelude.map read $ lines input)
+part2 = countSteps pom
