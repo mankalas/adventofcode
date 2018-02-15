@@ -7,7 +7,7 @@ import qualified Data.Vector as V
 type VInt = V.Vector (Int)
 
 rowToInts :: String -> [Int]
-rowToInts row = Prelude.map read $ words row
+rowToInts = map read . words
 
 increment :: Int -> Int -> VInt -> VInt
 increment pos incr v = v V.// [(pos, v V.! pos + incr)]
