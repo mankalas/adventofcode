@@ -1,13 +1,12 @@
 module Day03 (part1, part2) where
 
-import Common
+import Common (Coord, north, east, west, south, left, right, up, down)
 
 import Data.Maybe
 import Data.List
 import Data.List.Split
 import qualified Data.Map.Strict as Map
 
-type Coord = (Int, Int)
 type Grid = Map.Map Coord Int
 
 whichSquare :: Int -> [Int]
@@ -34,24 +33,19 @@ compute p g = sum [ fromMaybe 0 $ Map.lookup c g | c <- neighbours p ]
 
 nextCoord :: Coord -> Grid -> Coord
 nextCoord p grid =
-  let e = Map.lookup (east p) grid
-      n = Map.lookup (north p) grid
-      w = Map.lookup (west p) grid
-      s = Map.lookup (south p) grid in
+  let e = east p grid
+      n = north p grid
+      w = west p grid
+      s = south p grid in
     case (n, s, w, e) of
-      (_,       Nothing, Nothing, Nothing) -> east p
-      (Nothing, Nothing, _,       Nothing) -> north p
-      (Nothing, _,       Nothing, Nothing) -> west p
-      (Nothing, Nothing, Nothing, _      ) -> south p
-      (_,       Nothing, _,       Nothing) -> east p
-      (Nothing, _,       _,       Nothing) -> north p
-      (Nothing, _,       Nothing, _      ) -> west p
-      (_,       Nothing, Nothing, _      ) -> south p
-      where
-         north (x, y) = (x, y + 1)
-         south (x, y) = (x, y - 1)
-         east  (x, y) = (x + 1, y)
-         west  (x, y) = (x - 1, y)
+      (_,       Nothing, Nothing, Nothing) -> right p
+      (Nothing, Nothing, _,       Nothing) -> up p
+      (Nothing, _,       Nothing, Nothing) -> left p
+      (Nothing, Nothing, Nothing, _      ) -> down p
+      (_,       Nothing, _,       Nothing) -> right p
+      (Nothing, _,       _,       Nothing) -> up p
+      (Nothing, _,       Nothing, _      ) -> left p
+      (_,       Nothing, Nothing, _      ) -> down p
 
 build :: Int -> Coord -> Grid -> Int
 build n coord grid =
