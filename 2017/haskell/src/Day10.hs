@@ -1,4 +1,4 @@
-module Day10(part1, part2) where
+module Day10(part1, part2, knotHash) where
 
 import Common
 
@@ -15,7 +15,7 @@ import Data.Vector.Split
 type State = (VInt, Int, Int)
 
 circle255 = V.fromList [0..255]
-length_suffix = [17, 31, 73, 47, 23]
+length_suffix = map chr [17, 31, 73, 47, 23]
 
 knot_hash :: VInt -> [Int] -> Int
 knot_hash circle lengths =
@@ -48,10 +48,13 @@ padHex n =
 finalHash :: [Int] -> String
 finalHash = (foldl (++) "") . map padHex
 
+knotHash :: String -> String
+knotHash input = finalHash $ denseHash $ sparseHash circle255 $ map ord (input ++ length_suffix)
+
 -- export
 
 part1 :: String -> String
 part1 input = show $ knot_hash circle255 $ map read $ Data.List.Split.splitOn "," input
 
 part2 :: String -> String
-part2 input = finalHash $ denseHash $ sparseHash circle255 $ map ord input ++ length_suffix
+part2 = knotHash
