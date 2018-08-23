@@ -131,7 +131,7 @@ day14_1 :: TestTree
 day14_1 = dayTestCase "14" 1 (Day14.part1, "8316")
 
 day14_2 :: TestTree
-day14_2 = dayTestCase "14" 2 (Day14.part2, "1242")
+day14_2 = dayTestCase "14" 2 (Day14.part2, "1074")
 
 -- helpers
 

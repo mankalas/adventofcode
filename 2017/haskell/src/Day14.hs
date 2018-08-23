@@ -10,9 +10,11 @@ import Data.Char (intToDigit, digitToInt)
 import Data.List (intercalate)
 import qualified Data.Map.Strict as M
 import qualified Data.Vector as V
+import qualified Data.Set as S
 
 type Grid = V.Vector (VInt)
 type RegionGrid = M.Map Coord Int
+type SCoord = S.Set (Coord)
 
 paddedBin :: Char -> String
 paddedBin c =
@@ -31,6 +33,8 @@ grid input = V.generate 128 $ createLine . suffixInput input
 lookup :: Coord -> Grid -> Int
 lookup (-1, _) _ = 0
 lookup (_, -1) _ = 0
+lookup (128, _) _ = 0
+lookup (_, 128) _ = 0
 lookup (x, y) g = (g V.! y) V.! x
 
 nextCell :: Coord -> Coord
@@ -38,21 +42,26 @@ nextCell (127, y) = (0, y + 1)
 nextCell (x, y) = (x + 1, y)
 
 countRegions :: Grid -> Int
-countRegions grid = countRegions_ (0, 0) 0 grid
+countRegions grid = countRegions_ (0, 0) 0 S.empty grid
 
-countRegions_ :: Coord -> Int -> Grid -> Int
-countRegions_ (0, 128) num_regs _ = num_regs
-countRegions_ c@(x, y) num_regs grid =
-  let w  = Day14.lookup (x - 1, y) grid
-      n  = Day14.lookup (x, y - 1) grid
-      nw = Day14.lookup (x - 1, y - 1) grid
-      v  = Day14.lookup c grid
-      nc = nextCell c
-  in
-    case (w, n, v, nw) of
-      (1, 1, 1, 0) -> countRegions_ nc (num_regs - 1) grid
-      (0, 0, 1, _) -> countRegions_ nc (num_regs + 1) grid
-      _            -> countRegions_ nc num_regs grid
+skip :: Coord -> Grid -> SCoord -> Bool
+skip c g s = Day14.lookup c g == 0 || S.member c s
+
+explore :: Grid -> SCoord -> Coord -> SCoord
+explore grid s c =
+  if skip c grid s then
+    s
+  else
+    foldl (explore grid) (S.insert c s) [up(c), down(c), left(c), right(c)]
+
+countRegions_ :: Coord -> Int -> SCoord -> Grid -> Int
+countRegions_ (0, 128) num_regs _ _ = num_regs
+countRegions_ c@(x, y) num_regs s grid =
+  if skip c grid s then
+    countRegions_ nc num_regs s grid
+  else
+    countRegions_ nc (num_regs + 1) (explore grid s c) grid
+  where nc = nextCell c
 
 -- export
 
