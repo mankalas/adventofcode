@@ -15,7 +15,7 @@ move :: Int -> Int -> OffsetSucc -> VInt -> Int
 move pos n f v =
   let offset = v V.! pos
       next_pos = pos + offset in
-    if next_pos `elem` [0..V.length v]
+    if next_pos < 0 || next_pos >= V.length v
     then n + 1
     else
       let incr = f offset in
