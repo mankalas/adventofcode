@@ -38,7 +38,7 @@ tests = [
   -- day12_1, day12_2,
   -- day13_1, day13_2,
   -- day14_1, day14_2,
-   day15_1, day15_2
+  day15_1, day15_2
   ]
 
 -- tests
@@ -136,10 +136,10 @@ day14_2 :: TestTree
 day14_2 = dayTestCase "14" 2 (Day14.part2, "1074")
 
 day15_1 :: TestTree
-day15_1 = dayTestCase "15" 1 (Day15.part1, "8316")
+day15_1 = dayTestCase "15" 1 (Day15.part1, "631")
 
 day15_2 :: TestTree
-day15_2 = dayTestCase "15" 2 (Day15.part2, "1074")
+day15_2 = dayTestCase "15" 2 (Day15.part2, "279")
 
 -- helpers
 
