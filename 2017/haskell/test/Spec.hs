@@ -21,6 +21,7 @@ import Day12
 import Day13
 import Day14
 import Day15
+import Day16
 
 tests = [
   -- circular_test,
@@ -38,7 +39,8 @@ tests = [
   -- day12_1, day12_2,
   -- day13_1, day13_2,
   -- day14_1, day14_2,
-  day15_1, day15_2
+  -- day15_1, day15_2,
+  day16_1, day16_2
   ]
 
 -- tests
@@ -140,6 +142,12 @@ day15_1 = dayTestCase "15" 1 (Day15.part1, "631")
 
 day15_2 :: TestTree
 day15_2 = dayTestCase "15" 2 (Day15.part2, "279")
+
+day16_1 :: TestTree
+day16_1 = dayTestCase "16" 1 (Day16.part1, "cgpfhdnambekjiol")
+
+day16_2 :: TestTree
+day16_2 = dayTestCase "16" 2 (Day16.part2, "279")
 
 -- helpers
 
