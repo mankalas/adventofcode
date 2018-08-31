@@ -6,7 +6,6 @@ import Test.Tasty.HUnit
 import qualified Data.Vector as V
 
 import Common
-import Day01
 import Day02
 import Day03
 import Day04
@@ -25,7 +24,6 @@ import Day16
 
 tests = [
   -- circular_test,
-  -- day01_1, day01_2,
   -- day02_1, day02_2,
   -- day03_1, day03_2,
   -- day04_1, day04_2,
@@ -52,12 +50,6 @@ circular_test = testCase "Circular list" $ do
   assertEqual "Circular" "[4,3,0,1,2]" $ show $ Common.circularReverse (V.fromList [2,1,0,3,4]) 3 4
   assertEqual "Circular" "[4,3,0,1,2]" $ show $ Common.circularReverse (V.fromList [4,3,0,1,2]) 4 1
   assertEqual "Circular" "[3,4,2,1,0]" $ show $ Common.circularReverse (V.fromList [4,3,0,1,2]) 1 5
-
-day01_1 :: TestTree
-day01_1 = dayTestCase "01" 1 (Day01.part1, "1047")
-
-day01_2 :: TestTree
-day01_2 = dayTestCase "01" 2 (Day01.part2, "982")
 
 day02_1 :: TestTree
 day02_1 = dayTestCase "02" 1 (Day02.part1, "47136")
@@ -166,4 +158,4 @@ checkAnswer d n f = do
 
 main :: IO ()
 main = do
-  defaultMain (testGroup "AoE 2017" tests)
+  defaultMain (testGroup "AoC 2017" tests)
