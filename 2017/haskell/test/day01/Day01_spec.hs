@@ -25,4 +25,4 @@ actualTestCase = do dayTestCase "actual"
 
 main :: IO ()
 main = do
-  defaultMain (testGroup "AoE 2017 Day 01" tests)
+  defaultMain (testGroup "AoC 2017 Day 01" tests)
