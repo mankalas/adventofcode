@@ -64,3 +64,118 @@ tests:
     <<: *DEFAULT_EXE_OPTIONS
     main: Day01_spec.hs
     source-dirs: test/day01
+
+  day02:
+    <<: *DEFAULT_EXE_OPTIONS
+    main: Day02_spec.hs
+    source-dirs: test/day02
+
+  day03:
+    <<: *DEFAULT_EXE_OPTIONS
+    main: Day03_spec.hs
+    source-dirs: test/day03
+
+  day04:
+    <<: *DEFAULT_EXE_OPTIONS
+    main: Day04_spec.hs
+    source-dirs: test/day04
+
+  day05:
+    <<: *DEFAULT_EXE_OPTIONS
+    main: Day05_spec.hs
+    source-dirs: test/day05
+
+  day06:
+    <<: *DEFAULT_EXE_OPTIONS
+    main: Day06_spec.hs
+    source-dirs: test/day06
+
+  day07:
+    <<: *DEFAULT_EXE_OPTIONS
+    main: Day07_spec.hs
+    source-dirs: test/day07
+
+  day08:
+    <<: *DEFAULT_EXE_OPTIONS
+    main: Day08_spec.hs
+    source-dirs: test/day08
+
+  day09:
+    <<: *DEFAULT_EXE_OPTIONS
+    main: Day09_spec.hs
+    source-dirs: test/day09
+
+  day10:
+    <<: *DEFAULT_EXE_OPTIONS
+    main: Day10_spec.hs
+    source-dirs: test/day10
+
+  day11:
+    <<: *DEFAULT_EXE_OPTIONS
+    main: Day11_spec.hs
+    source-dirs: test/day11
+
+  day12:
+    <<: *DEFAULT_EXE_OPTIONS
+    main: Day12_spec.hs
+    source-dirs: test/day12
+
+  day13:
+    <<: *DEFAULT_EXE_OPTIONS
+    main: Day13_spec.hs
+    source-dirs: test/day13
+
+  day14:
+    <<: *DEFAULT_EXE_OPTIONS
+    main: Day14_spec.hs
+    source-dirs: test/day14
+
+  day15:
+    <<: *DEFAULT_EXE_OPTIONS
+    main: Day15_spec.hs
+    source-dirs: test/day15
+
+  day16:
+    <<: *DEFAULT_EXE_OPTIONS
+    main: Day16_spec.hs
+    source-dirs: test/day16
+
+  day17:
+    <<: *DEFAULT_EXE_OPTIONS
+    main: Day17_spec.hs
+    source-dirs: test/day17
+
+  day18:
+    <<: *DEFAULT_EXE_OPTIONS
+    main: Day18_spec.hs
+    source-dirs: test/day18
+
+  day19:
+    <<: *DEFAULT_EXE_OPTIONS
+    main: Day19_spec.hs
+    source-dirs: test/day19
+
+  day20:
+    <<: *DEFAULT_EXE_OPTIONS
+    main: Day20_spec.hs
+    source-dirs: test/day20
+
+  day21:
+    <<: *DEFAULT_EXE_OPTIONS
+    main: Day21_spec.hs
+    source-dirs: test/day21
+
+  day22:
+    <<: *DEFAULT_EXE_OPTIONS
+    main: Day22_spec.hs
+    source-dirs: test/day22
+
+  day23:
+    <<: *DEFAULT_EXE_OPTIONS
+    main: Day23_spec.hs
+    source-dirs: test/day23
+
+  day24:
+    <<: *DEFAULT_EXE_OPTIONS
+    main: Day24_spec.hs
+    source-dirs: test/day24
