@@ -22,6 +22,17 @@ description:         Please see the README on Github at <https://github.com/gith
 dependencies:
 - base >= 4.10 && < 5
 
+DEFAULT_EXE_OPTIONS: &DEFAULT_EXE_OPTIONS
+  ghc-options:
+    - -threaded
+    - -rtsopts
+    - -with-rtsopts=-N
+  dependencies:
+    - haskell
+    - tasty
+    - tasty-hunit
+    - HUnit
+
 library:
   source-dirs: src
   dependencies:
@@ -35,39 +46,21 @@ library:
 
 executables:
   haskell-exe:
+    <<: *DEFAULT_EXE_OPTIONS
     main:                Main.hs
     source-dirs:         app
-    ghc-options:
-    - -threaded
-    - -rtsopts
-    - -with-rtsopts=-N
     dependencies:
     - haskell
 
 tests:
   haskell-test:
+    <<: *DEFAULT_EXE_OPTIONS
     main:                Spec.hs
     source-dirs:         test
-    ghc-options:
-    - -threaded
-    - -rtsopts
-    - -with-rtsopts=-N
     dependencies:
-    - haskell
-    - tasty
-    - tasty-hunit
-    - HUnit
-    - vector
+      - vector
 
   day01:
+    <<: *DEFAULT_EXE_OPTIONS
     main: Day01_spec.hs
     source-dirs: test/day01
-    ghc-options:
-    - -threaded
-    - -rtsopts
-    - -with-rtsopts=-N
-    dependencies:
-    - haskell
-    - tasty
-    - tasty-hunit
-    - HUnit
