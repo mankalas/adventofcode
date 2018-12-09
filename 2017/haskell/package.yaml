@@ -49,8 +49,6 @@ executables:
     <<: *DEFAULT_EXE_OPTIONS
     main:                Main.hs
     source-dirs:         app
-    dependencies:
-    - haskell
 
 tests:
   haskell-test:
@@ -59,6 +57,8 @@ tests:
     source-dirs:         test
     dependencies:
       - vector
+      - tasty
+      - tasty-hunit
 
   day01:
     <<: *DEFAULT_EXE_OPTIONS
