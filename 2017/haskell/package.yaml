@@ -51,131 +51,170 @@ executables:
     source-dirs:         app
 
 tests:
-  haskell-test:
-    <<: *DEFAULT_EXE_OPTIONS
-    main:                Spec.hs
-    source-dirs:         test
-    dependencies:
-      - vector
-      - tasty
-      - tasty-hunit
-
   day01:
     <<: *DEFAULT_EXE_OPTIONS
     main: Day01_spec.hs
-    source-dirs: test/day01
+    source-dirs:
+      - test/day01
+      - test
 
   day02:
     <<: *DEFAULT_EXE_OPTIONS
     main: Day02_spec.hs
-    source-dirs: test/day02
+    source-dirs:
+      - test/day02
+      - test
 
   day03:
     <<: *DEFAULT_EXE_OPTIONS
     main: Day03_spec.hs
-    source-dirs: test/day03
+    source-dirs:
+      - test/day03
+      - test
 
   day04:
     <<: *DEFAULT_EXE_OPTIONS
     main: Day04_spec.hs
-    source-dirs: test/day04
+    source-dirs:
+      - test/day04
+      - test
 
   day05:
     <<: *DEFAULT_EXE_OPTIONS
     main: Day05_spec.hs
-    source-dirs: test/day05
+    source-dirs:
+      - test/day05
+      - test
 
   day06:
     <<: *DEFAULT_EXE_OPTIONS
     main: Day06_spec.hs
-    source-dirs: test/day06
+    source-dirs:
+      - test/day06
+      - test
 
   day07:
     <<: *DEFAULT_EXE_OPTIONS
     main: Day07_spec.hs
-    source-dirs: test/day07
+    source-dirs:
+      - test/day07
+      - test
 
   day08:
     <<: *DEFAULT_EXE_OPTIONS
     main: Day08_spec.hs
-    source-dirs: test/day08
+    source-dirs:
+      - test/day08
+      - test
 
   day09:
     <<: *DEFAULT_EXE_OPTIONS
     main: Day09_spec.hs
-    source-dirs: test/day09
+    source-dirs:
+      - test/day09
+      - test
 
   day10:
     <<: *DEFAULT_EXE_OPTIONS
     main: Day10_spec.hs
-    source-dirs: test/day10
+    source-dirs:
+      - test/day10
+      - test
 
   day11:
     <<: *DEFAULT_EXE_OPTIONS
     main: Day11_spec.hs
-    source-dirs: test/day11
+    source-dirs:
+      - test/day11
+      - test
 
   day12:
     <<: *DEFAULT_EXE_OPTIONS
     main: Day12_spec.hs
-    source-dirs: test/day12
+    source-dirs:
+      - test/day12
+      - test
 
   day13:
     <<: *DEFAULT_EXE_OPTIONS
     main: Day13_spec.hs
-    source-dirs: test/day13
+    source-dirs:
+      - test/day13
+      - test
 
   day14:
     <<: *DEFAULT_EXE_OPTIONS
     main: Day14_spec.hs
-    source-dirs: test/day14
+    source-dirs:
+      - test/day14
+      - test
 
   day15:
     <<: *DEFAULT_EXE_OPTIONS
     main: Day15_spec.hs
-    source-dirs: test/day15
+    source-dirs:
+      - test/day15
+      - test
 
   day16:
     <<: *DEFAULT_EXE_OPTIONS
     main: Day16_spec.hs
-    source-dirs: test/day16
+    source-dirs:
+      - test/day16
+      - test
 
   day17:
     <<: *DEFAULT_EXE_OPTIONS
     main: Day17_spec.hs
-    source-dirs: test/day17
+    source-dirs:
+      - test/day17
+      - test
 
   day18:
     <<: *DEFAULT_EXE_OPTIONS
     main: Day18_spec.hs
-    source-dirs: test/day18
+    source-dirs:
+      - test/day18
+      - test
 
   day19:
     <<: *DEFAULT_EXE_OPTIONS
     main: Day19_spec.hs
-    source-dirs: test/day19
+    source-dirs:
+      - test/day19
+      - test
 
   day20:
     <<: *DEFAULT_EXE_OPTIONS
     main: Day20_spec.hs
-    source-dirs: test/day20
+    source-dirs:
+      - test/day20
+      - test
 
   day21:
     <<: *DEFAULT_EXE_OPTIONS
     main: Day21_spec.hs
-    source-dirs: test/day21
+    source-dirs:
+      - test/day21
+      - test
 
   day22:
     <<: *DEFAULT_EXE_OPTIONS
     main: Day22_spec.hs
-    source-dirs: test/day22
+    source-dirs:
+      - test/day22
+      - test
 
   day23:
     <<: *DEFAULT_EXE_OPTIONS
     main: Day23_spec.hs
-    source-dirs: test/day23
+    source-dirs:
+      - test/day23
+      - test
 
   day24:
     <<: *DEFAULT_EXE_OPTIONS
     main: Day24_spec.hs
-    source-dirs: test/day24
+    source-dirs:
+      - test/day24
+      - test

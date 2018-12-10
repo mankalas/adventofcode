@@ -1,11 +1,5 @@
-module Main where
-
-import Test.Tasty
-import Test.Tasty.HUnit
-
-import Common
-
--- main
+import CommonSpec
+import Day01
 
 main :: IO ()
-main = common_main "01"
+main = common_main 1 Day01.part1 Day01.part2
