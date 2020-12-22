@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require '../src/common'
+require_relative '../../src/day'
 
 module Year2015
   class Day02 < Day
@@ -21,21 +21,9 @@ module Year2015
     private
 
     def each_lwh
-      @input.split("\n").map do |gift_dimension|
-        yield gift_dimension.split("x").map(&:to_i)
+      @input.lines.map do |gift_dimension|
+        yield gift_dimension.split('x').map(&:to_i)
       end
-    end
-  end
-
-  require 'test/unit'
-
-  class TestDay02 < Test::Unit::TestCase
-    def test_me
-      @answer1 = 1586300
-      @answer2 = 3737498
-      @clazz = Day02
-      assert_equal(@answer1, @clazz.new.part1)
-      assert_equal(@answer2, @clazz.new.part2)
     end
   end
 end

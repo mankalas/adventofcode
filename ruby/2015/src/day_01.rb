@@ -1,11 +1,11 @@
 # frozen_string_literal: true
 
-require '../src/common'
+require_relative '../../src/day'
 
 module Year2015
   class Day01 < Day
     def part1
-      return @input.count("(") - @input.count(")")
+      @input.count('(') - @input.count(')')
     end
 
     def part2
@@ -14,15 +14,6 @@ module Year2015
         floor += c == '(' ? 1 : -1
         return i + 1 if floor.negative?
       end
-    end
-  end
-
-  require 'test/unit'
-
-  class MyTest < Test::Unit::TestCase
-    def test_true
-      assert_equal(232, Day01.new.part1)
-      assert_equal(1783, Day01.new.part2)
     end
   end
 end
