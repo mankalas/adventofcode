@@ -1,0 +1,8 @@
+Style/Documentation:
+  Enabled: false
+
+Style/SingleLineMethods:
+  Enabled: false
+
+Naming/MethodParameterName:
+  Enabled: false

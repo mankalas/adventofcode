@@ -2,12 +2,10 @@
 
 require 'test/unit'
 
-require_relative '../../test/test_day'
-
 module Year2015
   class TestYear2015 < Test::Unit::TestCase
     def self.file_count
-      Dir.glob(File.join('..', 'src', '*')).select { |file| File.file?(file) }.count
+      Dir.glob(File.join('src', '*')).select { |file| File.file?(file) }.count
     end
 
     file_count.times do |i_day|
