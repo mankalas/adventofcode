@@ -10,6 +10,15 @@ module Navigation
       assert_equal(c.x, 0)
       assert_equal(c.y, 0)
     end
+
+    def test_upto
+      c = Coord.new(1, 1)
+      d = Coord.new(2, 3)
+      r = c.upto(d)
+      assert_equal(6, r.count)
+      assert_true(r.include?(Coord.new(1, 2)))
+      assert_false(r.include?(Coord.new(1, 4)))
+    end
   end
 
   class TestGrid < Test::Unit::TestCase
@@ -31,7 +40,17 @@ module Navigation
       g = Grid.new(size: Coord.new(6, 7), default_cell_value: :dummy)
       assert_equal(42, g.count)
       assert_equal(:dummy, g[5, 5].value)
-      assert_raise(RuntimeError, g[6, 5])
+      assert_raise Grid::OutOfBounds do
+        g[6, 5]
+      end
+    end
+
+    def test_rectangle
+      g = Grid.new
+      rect = g.rectangle(Coord.new(1, 1), Coord.new(5, 5))
+      assert_equal(25, rect.count)
+      assert_true(rect.include?(g[2, 2]))
+      assert_false(rect.include?(g[0, 0]))
     end
   end
 

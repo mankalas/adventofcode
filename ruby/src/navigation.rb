@@ -12,6 +12,20 @@ module Navigation
     def to_s
       "(x: #{x}, y: #{y})"
     end
+
+    def upto(dest)
+      return [] if dest.x < x || dest.y < y
+
+      (x..dest.x).map do |dx|
+        (y..dest.y).map do |dy|
+          Coord.new(dx, dy)
+        end
+      end.flatten
+    end
+
+    def ==(other)
+      x == other.x && y == other.y
+    end
   end
 
   class Cell
@@ -77,6 +91,8 @@ module Navigation
   end
 
   class Grid
+    class OutOfBounds < StandardError; end
+
     def initialize(size: nil, default_cell_value: 0)
       @size = size
       @grid = Hash.new do |hash, key|
@@ -90,8 +106,8 @@ module Navigation
 
     def [](x, y)
       if size
-        raise "Access #{x} outside grid's width #{size.x}" unless x < size.x
-        raise "Access #{y} outside grid's height #{size.y}" unless y < size.y
+        raise OutOfBounds, "Access #{x} outside grid's width #{size.x}" unless x < size.x
+        raise OutOfBounds, "Access #{y} outside grid's height #{size.y}" unless y < size.y
       end
 
       grid[[x, y]]
@@ -106,6 +122,13 @@ module Navigation
     end
 
     def rectangle(origin, destination)
+      closest, furthest = %i[min max].map do |m|
+        x, y = %i[x y].map do |c|
+          [origin, destination].map { |coord| coord.send(c) }.send(m)
+        end
+        Coord.new(x, y)
+      end
+      closest.upto(furthest).map { |c| at(c) }
     end
 
     private
