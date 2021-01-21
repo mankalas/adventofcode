@@ -24,6 +24,15 @@ module Navigation
       assert_equal(2, cell.y)
       assert_equal(:dummy, cell.value)
     end
+
+    def test_size
+      g = Grid.new(size: Coord.new(10, 10))
+      assert_equal(100, g.count)
+      g = Grid.new(size: Coord.new(6, 7), default_cell_value: :dummy)
+      assert_equal(42, g.count)
+      assert_equal(:dummy, g[5, 5].value)
+      assert_raise(RuntimeError, g[6, 5])
+    end
   end
 
   class TestSquare < Test::Unit::TestCase
@@ -90,14 +99,6 @@ module Navigation
       map = 'NEESW'
       cursor.navigate(map, nesw: 'NESW')
       assert_equal(grid[1, 0], cursor.cell)
-    end
-
-    def test_cell_enter_called
-      map = '>'
-      cursor.on_cell_enter = ->(cursor) { cursor.increment }
-      assert_equal(0, cursor.value)
-      cursor.navigate(map)
-      assert_equal(1, cursor.value)
     end
   end
 end

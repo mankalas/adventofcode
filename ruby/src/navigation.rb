@@ -68,7 +68,6 @@ module Navigation
 
     def go(direction)
       @position = grid.at(position).send(direction)
-      on_cell_enter
     end
 
     private
@@ -78,16 +77,23 @@ module Navigation
   end
 
   class Grid
-    def initialize(default_cell_value: 0)
+    def initialize(size: nil, default_cell_value: 0)
+      @size = size
       @grid = Hash.new do |hash, key|
         x, y = key
         hash[key] = Square.new(grid: self,
                                value: default_cell_value,
                                coord: Coord.new(x, y))
       end
+      populate
     end
 
     def [](x, y)
+      if size
+        raise "Access #{x} outside grid's width #{size.x}" unless x < size.x
+        raise "Access #{y} outside grid's height #{size.y}" unless y < size.y
+      end
+
       grid[[x, y]]
     end
 
@@ -99,8 +105,21 @@ module Navigation
       grid.count
     end
 
+    def rectangle(origin, destination)
+    end
+
     private
 
-    attr_reader :grid
+    attr_reader :grid, :size
+
+    def populate
+      return unless size
+
+      size.x.times do |w|
+        size.y.times do |h|
+          self[w, h]
+        end
+      end
+    end
   end
 end
