@@ -9,7 +9,7 @@ module Year2015
     end
 
     file_count.times do |i_day|
-      next if i_day == 3
+      next if i_day == 3 || i_day == 5
 
       s_day = format('%02d', i_day + 1)
       require_relative "../src/day_#{s_day}"

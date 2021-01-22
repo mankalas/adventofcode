@@ -5,8 +5,8 @@ module Navigation
     attr_reader :x, :y
 
     def initialize(x = 0, y = 0)
-      @x = x
-      @y = y
+      @x = x.to_i
+      @y = y.to_i
     end
 
     def to_s
@@ -82,12 +82,20 @@ module Navigation
 
     def go(direction)
       @position = grid.at(position).send(direction)
+      on_cell_enter
+    end
+
+    def position=(coord)
+      self.position = coord
+      on_cell_enter
     end
 
     private
 
     attr_writer :value
     attr_reader :grid
+
+    def on_cell_enter; end
   end
 
   class Grid
@@ -101,7 +109,6 @@ module Navigation
                                value: default_cell_value,
                                coord: Coord.new(x, y))
       end
-      populate
     end
 
     def [](x, y)
@@ -121,28 +128,23 @@ module Navigation
       grid.count
     end
 
+    def cells
+      @grid.values
+    end
+
     def rectangle(origin, destination)
-      closest, furthest = %i[min max].map do |m|
-        x, y = %i[x y].map do |c|
-          [origin, destination].map { |coord| coord.send(c) }.send(m)
+      min_x, max_x = [origin.x, destination.x].minmax
+      min_y, max_y = [origin.y, destination.y].minmax
+
+      (min_x..max_x).map do |x|
+        (min_y..max_y).map do |y|
+          self[x, y]
         end
-        Coord.new(x, y)
-      end
-      closest.upto(furthest).map { |c| at(c) }
+      end.flatten
     end
 
     private
 
     attr_reader :grid, :size
-
-    def populate
-      return unless size
-
-      size.x.times do |w|
-        size.y.times do |h|
-          self[w, h]
-        end
-      end
-    end
   end
 end

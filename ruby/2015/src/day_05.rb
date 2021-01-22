@@ -2,8 +2,6 @@
 
 require_relative '../../src/day'
 
-require 'digest'
-
 module Year2015
   class Day05 < Day
     def enough_vowels?(string)
