@@ -7,7 +7,7 @@ cabal-version: 1.12
 name:           aoc2021
 version:        0.1.0.0
 synopsis:       Short description of your package
-description:    Please see the README on Github at <https://github.com/githubuser/haskell#readme>
+description:    Please see the README on Github at <https://github.com/githubuser/aoc2021#readme>
 homepage:       https://github.com/mankalas/adventofcode#readme
 bug-reports:    https://github.com/mankalas/adventofcode/issues
 author:         Vincent boucheny
@@ -24,22 +24,18 @@ source-repository head
   location: https://github.com/mankalas/adventofcode
 
 library
+  exposed-modules:
+      Day01
   other-modules:
       Paths_aoc2021
   hs-source-dirs:
       src
   build-depends:
-      Unique
-    , base >=4.10 && <5
-    , containers
-    , either-unwrap
-    , parsec
-    , split
+      base >=4.10 && <5
     , vector
-    , vector-split
   default-language: Haskell2010
 
-executable haskell-exe
+executable aoc2021-exe
   main-is: Main.hs
   other-modules:
       Paths_aoc2021
@@ -50,7 +46,7 @@ executable haskell-exe
       base >=4.10 && <5
   default-language: Haskell2010
 
-test-suite haskell-test
+test-suite aoc2021-test
   type: exitcode-stdio-1.0
   main-is: Spec.hs
   other-modules:
@@ -60,8 +56,8 @@ test-suite haskell-test
   ghc-options: -threaded -rtsopts -with-rtsopts=-N
   build-depends:
       HUnit
+    , aoc2021
     , base >=4.10 && <5
     , tasty
     , tasty-hunit
-    , vector
   default-language: Haskell2010

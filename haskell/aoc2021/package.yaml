@@ -17,7 +17,7 @@ synopsis:            Short description of your package
 # To avoid duplicated efforts in documentation and dealing with the
 # complications of embedding Haddock markup inside cabal files, it is
 # common to point users to the README.md file.
-description:         Please see the README on Github at <https://github.com/githubuser/haskell#readme>
+description:         Please see the README on Github at <https://github.com/githubuser/aoc2021#readme>
 
 dependencies:
 - base >= 4.10 && < 5
@@ -25,16 +25,10 @@ dependencies:
 library:
   source-dirs: src
   dependencies:
-    - split
-    - containers
-    - Unique
     - vector
-    - vector-split
-    - parsec
-    - either-unwrap
 
 executables:
-  haskell-exe:
+  aoc2021-exe:
     main:                Main.hs
     source-dirs:         app
     ghc-options:
@@ -43,7 +37,7 @@ executables:
     - -with-rtsopts=-N
 
 tests:
-  haskell-test:
+  aoc2021-test:
     main:                Spec.hs
     source-dirs:         test
     ghc-options:
@@ -51,7 +45,7 @@ tests:
     - -rtsopts
     - -with-rtsopts=-N
     dependencies:
-    - tasty
-    - tasty-hunit
-    - HUnit
-    - vector
+      - aoc2021
+      - tasty
+      - tasty-hunit
+      - HUnit
