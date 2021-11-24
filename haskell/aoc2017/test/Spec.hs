@@ -21,33 +21,52 @@ import Day12
 import Day13
 import Day14
 
-tests = [
-  -- circular_test,
-  -- day01_1, day01_2,
-  -- day02_1, day02_2,
-  -- day03_1, day03_2,
-  -- day04_1, day04_2,
-  -- day05_1, day05_2,
-  -- day06_1, day06_2,
-  -- day07_1, day07_2,
-  -- day08_1, day08_2,
-  -- day09_1, day09_2,
-  -- day10_1, day10_2,
-  -- day11_1, day11_2,
-  -- day12_1, day12_2,
-  -- day13_1, day13_2
-  day14_1, day14_2
+tests =
+  [ circular_test
+  , day01_1
+  , day01_2
+  , day02_1
+  , day02_2
+  , day03_1
+  , day03_2
+  , day04_1
+  , day04_2
+  , day05_1
+  , day05_2
+  , day06_1
+  , day06_2
+  , day07_1
+  , day07_2
+  , day08_1
+  , day08_2
+  , day09_1
+  , day09_2
+  , day10_1
+  , day10_2
+  , day11_1
+  , day11_2
+  , day12_1
+  , day12_2
+  , day13_1
+  , day13_2
+  , day14_1
+  , day14_2
   ]
 
 -- tests
-
 circular_test :: TestTree
-circular_test = testCase "Circular list" $ do
-  assertEqual "Classic " "[0,2,1]" $ show $ Common.circularReverse (V.fromList [0,1,2]) 1 2
-  assertEqual "Circular" "[2,1,0]" $ show $ Common.circularReverse (V.fromList [0,1,2]) 2 2
-  assertEqual "Circular" "[4,3,0,1,2]" $ show $ Common.circularReverse (V.fromList [2,1,0,3,4]) 3 4
-  assertEqual "Circular" "[4,3,0,1,2]" $ show $ Common.circularReverse (V.fromList [4,3,0,1,2]) 4 1
-  assertEqual "Circular" "[3,4,2,1,0]" $ show $ Common.circularReverse (V.fromList [4,3,0,1,2]) 1 5
+circular_test =
+  testCase "Circular list" $ do
+    assertEqual "Classic " "[0,2,1]" $
+      show $ Common.circularReverse (V.fromList [0, 1, 2]) 1 2
+    assertEqual "Circular" "[2,1,0]" $
+      show $ Common.circularReverse (V.fromList [0, 1, 2]) 2 2
+    assertEqual "Circular" "[4,3,0,1,2]" $
+      show $ Common.circularReverse (V.fromList [2, 1, 0, 3, 4]) 3 4
+    assertEqual "Circular" "[4,3,0,1,2]" $
+      show $ Common.circularReverse (V.fromList [4, 3, 0, 1, 2]) 4 1
+    assertEqual "Circular" "[3,4,2,1,0]" $
+      show $ Common.circularReverse (V.fromList [4, 3, 0, 1, 2]) 1 5
 
 day01_1 :: TestTree
 day01_1 = dayTestCase "01" 1 (Day01.part1, "1047")
@@ -134,7 +153,6 @@ day14_2 :: TestTree
 day14_2 = dayTestCase "14" 2 (Day14.part2, "1074")
 
 -- helpers
-
 testCaseLabel day part = "Day " ++ day ++ " part " ++ show part
 
 dayTestCase :: String -> Int -> (String -> String, String) -> TestTree
@@ -147,7 +165,6 @@ checkAnswer d n f = do
   assertEqual "" n (f input)
 
 -- main
-
 main :: IO ()
 main = do
   defaultMain (testGroup "AoE 2017" tests)

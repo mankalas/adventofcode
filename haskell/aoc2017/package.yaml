@@ -1,4 +1,4 @@
-name:                haskell
+name:                aoc2017
 version:             0.1.0.0
 github:              "mankalas/adventofcode"
 license:             BSD3
@@ -34,7 +34,7 @@ library:
     - either-unwrap
 
 executables:
-  haskell-exe:
+  aoc2017-exe:
     main:                Main.hs
     source-dirs:         app
     ghc-options:
@@ -42,16 +42,19 @@ executables:
     - -rtsopts
     - -with-rtsopts=-N
     dependencies:
-    - aoc2017
+      - aoc2017
 
 tests:
-  haskell-test:
+  aoc2017-test:
     main:                Spec.hs
     source-dirs:         test
     ghc-options:
-    - -threaded
-    - -rtsopts
-    - -with-rtsopts=-N
+      - -threaded
+      - -rtsopts
+      - -with-rtsopts=-N
     dependencies:
       - aoc2017
-      - aoc2021
+      - tasty
+      - tasty-hunit
+      - HUnit
+      - vector
