@@ -1,0 +1,8 @@
+cradle:
+  stack:
+    - path: "./aoc2017/src"
+      component: "aoc2017:lib"
+    - path: "./aoc2017/app"
+      component: "aoc2017:exe:aoc2017-exe"
+    - path: "./aoc2017/test"
+      component: "aoc2017:test:aoc2017-test"
