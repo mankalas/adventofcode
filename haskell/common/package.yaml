@@ -1,4 +1,4 @@
-name:                aoc2017
+name:                common
 version:             0.1.0.0
 github:              "mankalas/adventofcode"
 license:             BSD3
@@ -17,7 +17,7 @@ synopsis:            Short description of your package
 # To avoid duplicated efforts in documentation and dealing with the
 # complications of embedding Haddock markup inside cabal files, it is
 # common to point users to the README.md file.
-description:         Please see the README on Github at <https://github.com/githubuser/haskell#readme>
+description:         Please see the README on Github at <https://github.com/githubuser/common#readme>
 
 dependencies:
 - base >= 4.10 && < 5
@@ -32,29 +32,16 @@ library:
     - vector-split
     - parsec
     - either-unwrap
-    - common
 
-executables:
-  aoc2017-exe:
-    main:                Main.hs
-    source-dirs:         app
+tests:
+  common-test:
+    main:                Spec.hs
+    source-dirs:         test
     ghc-options:
     - -threaded
     - -rtsopts
     - -with-rtsopts=-N
     dependencies:
-      - aoc2017
-
-tests:
-  aoc2017-test:
-    main:                Spec.hs
-    source-dirs:         test
-    ghc-options:
-      - -threaded
-      - -rtsopts
-      - -with-rtsopts=-N
-    dependencies:
-      - aoc2017
       - tasty
       - tasty-hunit
       - HUnit

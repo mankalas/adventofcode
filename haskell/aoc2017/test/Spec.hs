@@ -6,6 +6,7 @@ import Test.Tasty.HUnit
 import qualified Data.Vector as V
 
 import Common
+import Common
 import Day01
 import Day02
 import Day03
@@ -20,6 +21,7 @@ import Day11
 import Day12
 import Day13
 import Day14
+import Day15
 
 tests =
   [ circular_test
@@ -51,7 +53,30 @@ tests =
   , day13_2
   , day14_1
   , day14_2
+  , day15_1
+  , day15_2
   ]
+
+solutions :: [(Int, [Solution])]
+solutions =
+  zip
+    [1 ..]
+    [ [day01_1, day01_2]
+    , [day02_1, day02_2]
+    , [day03_1, day03_2]
+    , [day04_1, day04_2]
+    , [day05_1, day05_2]
+    , [day06_1, day06_2]
+    , [day07_1, day07_2]
+    , [day08_1, day08_2]
+    , [day09_1, day09_2]
+    , [day10_1, day10_2]
+    , [day11_1, day11_2]
+    , [day12_1, day12_2]
+    , [day13_1, day13_2]
+    , [day14_1, day14_2]
+    , [day15_1, day15_2]
+    ]
 
 -- tests
 circular_test :: TestTree
@@ -152,6 +177,12 @@ day14_1 = dayTestCase "14" 1 (Day14.part1, "8316")
 day14_2 :: TestTree
 day14_2 = dayTestCase "14" 2 (Day14.part2, "1074")
 
+day15_1 :: TestTree
+day15_1 = dayTestCase "15" 1 (Day15.part1, "1092455")
+
+day15_2 :: TestTree
+day15_2 = dayTestCase "15" 2 (Day15.part2, "1074")
+
 -- helpers
 testCaseLabel day part = "Day " ++ day ++ " part " ++ show part
 
@@ -159,12 +190,13 @@ dayTestCase :: String -> Int -> (String -> String, String) -> TestTree
 dayTestCase day part (fun, solution) =
   testCase (testCaseLabel day part) (checkAnswer day solution fun)
 
-checkAnswer :: String -> String -> (String -> String) -> IO ()
+checkAnswer :: String -> String -> Solution -> IO ()
 checkAnswer d n f = do
-  input <- readFile ("test/Day" ++ d ++ ".input")
+  input <- readFile ("../input/day_" ++ d)
   assertEqual "" n (f input)
 
 -- main
 main :: IO ()
 main = do
+  args <- getArgs
   defaultMain (testGroup "AoE 2017" tests)
