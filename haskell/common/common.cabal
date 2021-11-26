@@ -5,34 +5,21 @@ cabal-version: 1.12
 -- see: https://github.com/sol/hpack
 
 name:           common
-version:        0.1.0.0
-synopsis:       Short description of your package
-description:    Please see the README on Github at <https://github.com/githubuser/common#readme>
-homepage:       https://github.com/mankalas/adventofcode#readme
-bug-reports:    https://github.com/mankalas/adventofcode/issues
-author:         Vincent boucheny
-maintainer:     mankalas@gmail.com
-copyright:      2017 Vincent Boucheny
-license:        BSD3
+version:        0.0.0
 build-type:     Simple
-extra-source-files:
-    README.md
-    ChangeLog.md
-
-source-repository head
-  type: git
-  location: https://github.com/mankalas/adventofcode
 
 library
   exposed-modules:
       AoC
+      Grid
   other-modules:
       Paths_common
   hs-source-dirs:
       src
+  ghc-options: -Wall -fwarn-tabs -fno-warn-type-defaults
   build-depends:
-      Unique
-    , base >=4.10 && <5
+      array
+    , base >=4.10
     , containers
     , either-unwrap
     , parsec
@@ -45,13 +32,16 @@ test-suite common-test
   type: exitcode-stdio-1.0
   main-is: Spec.hs
   other-modules:
+      GridSpec
       Paths_common
   hs-source-dirs:
       test
-  ghc-options: -threaded -rtsopts -with-rtsopts=-N
+  ghc-options: -Wall -fwarn-tabs -fno-warn-type-defaults -threaded -rtsopts -with-rtsopts=-N
   build-depends:
       HUnit
-    , base >=4.10 && <5
+    , array
+    , base >=4.10
+    , common
     , tasty
     , tasty-hunit
     , vector

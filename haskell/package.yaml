@@ -6,10 +6,6 @@ author:              "Vincent boucheny"
 maintainer:          "mankalas@gmail.com"
 copyright:           "2017 Vincent Boucheny"
 
-extra-source-files:
-- README.md
-- ChangeLog.md
-
 # Metadata used when publishing your package
 synopsis:            Short description of your package
 # category:            Web

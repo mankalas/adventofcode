@@ -1,33 +1,18 @@
-name:                common
-version:             0.1.0.0
-github:              "mankalas/adventofcode"
-license:             BSD3
-author:              "Vincent boucheny"
-maintainer:          "mankalas@gmail.com"
-copyright:           "2017 Vincent Boucheny"
+name: common
 
-extra-source-files:
-- README.md
-- ChangeLog.md
-
-# Metadata used when publishing your package
-synopsis:            Short description of your package
-# category:            Web
-
-# To avoid duplicated efforts in documentation and dealing with the
-# complications of embedding Haddock markup inside cabal files, it is
-# common to point users to the README.md file.
-description:         Please see the README on Github at <https://github.com/githubuser/common#readme>
-
+ghc-options:
+  - -Wall
+  - -fwarn-tabs
+  - -fno-warn-type-defaults
 dependencies:
-- base >= 4.10 && < 5
+  - base >= 4.10
+  - array
 
 library:
   source-dirs: src
   dependencies:
     - split
     - containers
-    - Unique
     - vector
     - vector-split
     - parsec
@@ -42,6 +27,7 @@ tests:
     - -rtsopts
     - -with-rtsopts=-N
     dependencies:
+      - common
       - tasty
       - tasty-hunit
       - HUnit
