@@ -12,6 +12,7 @@ library
   exposed-modules:
       AoC
       Grid
+      IntHelper
       MyList
   other-modules:
       Paths_common

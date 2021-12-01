@@ -4,10 +4,8 @@ module Day01
   ) where
 
 import AoC
+import IntHelper
 import MyList
-
-linesToInts :: String -> [Int]
-linesToInts = map read . lines
 
 -- Compare a pair of consecutive depths
 depthIncrease :: (Int, Int) -> Bool
