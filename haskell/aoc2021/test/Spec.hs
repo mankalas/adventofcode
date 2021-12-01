@@ -8,10 +8,16 @@ import Day01
 tests = [day01_1, day01_2]
 
 day01_1 :: TestTree
-day01_1 = dayTestCase "01" 1 (Day01.part1, "lorem ipsum")
+day01_1 =
+  testCase "Day 01 part 1" $ do
+    Day01.part1 "199\n200\n208\n210\n200\n207\n240\n269\n260\n263" @?= "7"
+    checkAnswer "01" "1722" Day01.part1
 
 day01_2 :: TestTree
-day01_2 = dayTestCase "01" 2 (Day01.part2, "lorem ipsum")
+day01_2 =
+  testCase "Day 01 part 1" $ do
+    Day01.part2 "199\n200\n208\n210\n200\n207\n240\n269\n260\n263" @?= "5"
+    checkAnswer "01" "1748" Day01.part2
 
 -- helpers
 testCaseLabel day part = "Day " ++ day ++ " part " ++ show part
