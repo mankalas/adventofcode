@@ -17,6 +17,9 @@ library:
     - vector-split
     - parsec
     - either-unwrap
+    - tasty
+    - tasty-hunit
+    - HUnit
 
 tests:
   common-test:

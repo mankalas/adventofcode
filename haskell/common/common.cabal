@@ -12,18 +12,22 @@ library
   exposed-modules:
       AoC
       Grid
+      MyList
   other-modules:
       Paths_common
   hs-source-dirs:
       src
   ghc-options: -Wall -fwarn-tabs -fno-warn-type-defaults
   build-depends:
-      array
+      HUnit
+    , array
     , base >=4.10
     , containers
     , either-unwrap
     , parsec
     , split
+    , tasty
+    , tasty-hunit
     , vector
     , vector-split
   default-language: Haskell2010
