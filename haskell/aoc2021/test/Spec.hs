@@ -4,8 +4,21 @@ import Test.Tasty
 import Test.Tasty.HUnit
 
 import Day01
+import Day02
 
-tests = [day01_1, day01_2]
+tests = [day01_1, day01_2, day02_1, day02_2]
+
+day02_1 :: TestTree
+day02_1 =
+  testCase "Day 02 part 1" $ do
+    Day02.part1 "" @?= ""
+    checkAnswer "02" "" Day02.part1
+
+day02_2 :: TestTree
+day02_2 =
+  testCase "Day 02 part 1" $ do
+    Day02.part2 "" @?= ""
+    checkAnswer "" "" Day02.part2
 
 day01_1 :: TestTree
 day01_1 =

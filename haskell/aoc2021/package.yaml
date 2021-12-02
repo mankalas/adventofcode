@@ -27,6 +27,7 @@ library:
   dependencies:
     - vector
     - common
+    - parsec
 
 executables:
   aoc2021-exe:
