@@ -14,6 +14,8 @@ data Command
   | Down Int
   | Up Int
 
+type Aim = Int
+
 type Position = (Int, Int)
 
 num :: Parser Integer
@@ -48,31 +50,33 @@ command = do
   _ <- char '\n'
   return c
 
-lines :: Parser [Command]
-lines = do
+commands :: Parser [Command]
+commands = do
   result <- many command
   eof
   return result
 
-apply :: Command -> Position -> Position
-apply cmd (h, d) =
+applyCmd :: Position -> Command -> Position
+applyCmd (h, d) cmd =
   case cmd of
     Forward i -> (h + i, d)
     Up i -> (h, d - i)
     Down i -> (h, d + i)
 
+applyCmdAim :: (Position, Aim) -> Command -> (Position, Aim)
+applyCmdAim ((h, d), a) cmd =
+  case cmd of
+    Forward i -> ((h + i, d + a * i), a)
+    Up i -> ((h, d), a - i)
+    Down i -> ((h, d), a + i)
+
 navigate :: [Command] -> Position
-navigate list = apply (head list) (0, 0)
+navigate = foldl applyCmd (0, 0)
 
-showCmd :: Command -> String
-showCmd cmd = "#"
-  -- case cmd of
-  --   Forward i -> "Fwd" ++ show i
-  --   Up i -> "Up" ++ show i
-  --   Down i -> "Down" ++ show i
-
-showCmds :: [Command] -> String
-showCmds = concat . map showCmd
+navigateWithAim :: [Command] -> Position
+navigateWithAim cmds =
+  let (p, _) = foldl applyCmdAim ((0, 0), 0) cmds
+   in p
 
 parseInput :: GenParser Char () a -> String -> a
 parseInput p = (either (error . show) id) . (parse p "(unknown)")
@@ -80,11 +84,10 @@ parseInput p = (either (error . show) id) . (parse p "(unknown)")
 -- exports
 part1 :: Solution
 part1 input =
-  let cmds = parseInput Day02.lines input
-      (a, b) = navigate cmds
-      result = showCmds cmds
-   -- in result    -- works: display plenty of '#'
-   in show $ a + b -- doesn't work: errors with 'Prelude.head: empty list'...
+  let (h, d) = navigate $ parseInput commands input
+   in show $ h * d
 
 part2 :: Solution
-part2 = id
+part2 input =
+  let (h, d) = navigateWithAim $ parseInput commands input
+   in show $ h * d
