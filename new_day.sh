@@ -50,6 +50,7 @@ echo "Puzzle's output done"
 data="---
 \nday_i: $d
 \nday_s: '$pad_d'
+\nyear: $y
 \n---"
 
 echo $data
@@ -57,7 +58,15 @@ echo $data
 # Haskell
 echo "Generating Haskell files..."
 cd haskell
-echo $data | mustache - templates/Day.hs.mustache > aoc$y/src/Day$pad_d.hs
+echo $data | mustache - templates/Day.hs.mustache > aoc$y/src/Day"$pad_d".hs
+echo $data | mustache - templates/DaySpec.hs.mustache > aoc$y/test/Day"$pad_d"Spec.hs
+echo "
+  day$pad_d:
+    main: Day${pad_d}Spec.hs
+    source-dirs: test
+    dependencies:
+      - aoc$y
+" >> aoc$y/package.yaml
 cd ..
 
 echo "Done"

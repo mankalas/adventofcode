@@ -1,0 +1,14 @@
+-- |
+module Main where
+
+import AoC (testDay)
+import Test.Tasty
+
+import Day{{day_s}}
+
+tests = [testDay {{year}} Day{{day_s}}.parts]
+
+-- main
+main :: IO ()
+main = do
+  defaultMain (testGroup "AoE {{year}}" tests)
