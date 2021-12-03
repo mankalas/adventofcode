@@ -1,6 +1,5 @@
 module Day02
-  ( part1
-  , part2
+  ( parts
   ) where
 
 import AoC
@@ -82,12 +81,15 @@ parseInput :: GenParser Char () a -> String -> a
 parseInput p = (either (error . show) id) . (parse p "(unknown)")
 
 -- exports
-part1 :: Solution
+part1 :: PartSolution
 part1 input =
   let (h, d) = navigate $ parseInput commands input
    in show $ h * d
 
-part2 :: Solution
+part2 :: PartSolution
 part2 input =
   let (h, d) = navigateWithAim $ parseInput commands input
    in show $ h * d
+
+parts :: DaySolutions
+parts = (2, part1, part2)

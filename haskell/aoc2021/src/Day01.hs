@@ -1,6 +1,5 @@
 module Day01
-  ( part1
-  , part2
+  ( parts
   ) where
 
 import AoC
@@ -26,9 +25,12 @@ createWindows d1 =
    in zip3 d1 d2 d3
 
 -- exports
-part1 :: Solution
+part1 :: PartSolution
 part1 = show . length . filterConsecutive depthIncrease . linesToInts
 
-part2 :: Solution
+part2 :: PartSolution
 part2 =
   show . length . filterConsecutive windowIncrease . createWindows . linesToInts
+
+parts :: DaySolutions
+parts = (1, part1, part2)

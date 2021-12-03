@@ -62,8 +62,7 @@ echo $data | mustache - templates/Day.hs.mustache > aoc$y/src/Day"$pad_d".hs
 echo $data | mustache - templates/DaySpec.hs.mustache > aoc$y/test/Day"$pad_d"Spec.hs
 echo "
   day$pad_d:
-    main: Day${pad_d}Spec.hs
-    source-dirs: test
+    main: test/Day${pad_d}Spec.hs
     dependencies:
       - aoc$y
 " >> aoc$y/package.yaml
