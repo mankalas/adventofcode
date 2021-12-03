@@ -3,12 +3,22 @@ module AoC where
 
 import Test.Tasty
 import Test.Tasty.HUnit
+import Text.Printf
 
-type Solution = String -> String
+type PartSolution = String -> String
 
-testDay i part1 part2 =
-  testCaseSteps "Day" $ \step -> do
+type DaySolutions = (Int, PartSolution, PartSolution)
+
+testDay :: Int -> DaySolutions -> TestTree
+testDay year (day, part1, part2) =
+  testCaseSteps ("Day " ++ d) $ \step -> do
+    input <- readFile ("../../input/" ++ y ++ "/day_" ++ d)
     step "Part 1"
---    part1 input @?= output_part1
+    output_1 <- readFile ("../../output/" ++ y ++ "/day_" ++ d ++ "_part_1")
+    part1 input @?= output_1
     step "Part 2"
---    part2 input @?= output_part2
+    output_2 <- readFile ("../../output/" ++ y ++ "/day_" ++ d ++ "_part_2")
+    part2 input @?= output_2
+  where
+    d = printf "%02d" day
+    y = show year
