@@ -5,23 +5,8 @@ cabal-version: 1.12
 -- see: https://github.com/sol/hpack
 
 name:           aoc2017
-version:        0.1.0.0
-synopsis:       Short description of your package
-description:    Please see the README on Github at <https://github.com/githubuser/haskell#readme>
-homepage:       https://github.com/mankalas/adventofcode#readme
-bug-reports:    https://github.com/mankalas/adventofcode/issues
-author:         Vincent boucheny
-maintainer:     mankalas@gmail.com
-copyright:      2017 Vincent Boucheny
-license:        BSD3
+version:        0.0.0
 build-type:     Simple
-extra-source-files:
-    README.md
-    ChangeLog.md
-
-source-repository head
-  type: git
-  location: https://github.com/mankalas/adventofcode
 
 library
   exposed-modules:
@@ -40,38 +25,46 @@ library
       Day12
       Day13
       Day14
-      Day15
       Lib
       Parser
   other-modules:
       Paths_aoc2017
   hs-source-dirs:
       src
+  ghc-options: -O2 -Wall -fno-warn-type-defaults -fno-warn-unused-do-bind -fwarn-tabs
   build-depends:
-      base >=4.10 && <5
+      HUnit
+    , base >=4.10 && <5
     , common
     , containers
     , either-unwrap
     , parsec
     , split
+    , tasty
+    , tasty-hunit
     , vector
     , vector-split
   default-language: Haskell2010
 
-test-suite aoc2017-test
+test-suite day01
   type: exitcode-stdio-1.0
-  main-is: Spec.hs
+  main-is: Day01Spec.hs
   other-modules:
       Paths_aoc2017
   hs-source-dirs:
       test
-  ghc-options: -threaded -rtsopts -with-rtsopts=-N
+  ghc-options: -O2 -Wall -fno-warn-type-defaults -fno-warn-unused-do-bind -fwarn-tabs
   build-depends:
       HUnit
     , aoc2017
     , base >=4.10 && <5
     , common
+    , containers
+    , either-unwrap
+    , parsec
+    , split
     , tasty
     , tasty-hunit
     , vector
+    , vector-split
   default-language: Haskell2010
