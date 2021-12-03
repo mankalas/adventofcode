@@ -27,23 +27,11 @@ library:
   dependencies:
     - split
     - containers
-    - Unique
     - vector
     - vector-split
     - parsec
     - either-unwrap
     - common
-
-executables:
-  aoc2017-exe:
-    main:                Main.hs
-    source-dirs:         app
-    ghc-options:
-    - -threaded
-    - -rtsopts
-    - -with-rtsopts=-N
-    dependencies:
-      - aoc2017
 
 tests:
   aoc2017-test:
@@ -59,3 +47,4 @@ tests:
       - tasty-hunit
       - HUnit
       - vector
+      - common

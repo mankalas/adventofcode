@@ -1,17 +1,19 @@
-module Day04 (part1, part2) where
+module Day04
+  ( part1
+  , part2
+  ) where
 
 import Common
 
-import Data.List
-import Data.List.Unique
+import Data.List (sort)
+import MyList
 
 -- code
-
 validate :: ([String] -> Bool) -> String -> String
-validate policy input = show $ length [ line | line <- lines input, policy $ words line]
+validate policy input =
+  show $ length [line | line <- lines input, policy $ words line]
 
 -- exports
-
 part1 :: String -> String
 part1 = validate allUnique
 
