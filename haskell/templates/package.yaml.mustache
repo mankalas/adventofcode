@@ -1,0 +1,22 @@
+name: aoc{{year}}
+dependencies:
+  - base >= 4.10 && < 5
+ghc-options:
+  - -threaded
+  - -rtsopts
+  - -with-rtsopts=-N
+
+library:
+  source-dirs: src
+  dependencies:
+    - common
+
+tests:
+  aoc{{year}}-test:
+    main:                Spec.hs
+    source-dirs:         test
+    dependencies:
+      - aoc{{year}}
+      - tasty
+      - tasty-hunit
+      - HUnit
