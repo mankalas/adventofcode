@@ -34,3 +34,9 @@ tests:
     main: test/Day03Spec.hs
     dependencies:
       - aoc2021
+
+  day04:
+    main: test/Day04Spec.hs
+    dependencies:
+      - aoc2021
+

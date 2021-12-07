@@ -13,6 +13,7 @@ library
       Day01
       Day02
       Day03
+      Day04
   other-modules:
       Paths_aoc2021
   hs-source-dirs:
@@ -65,6 +66,23 @@ test-suite day02
 test-suite day03
   type: exitcode-stdio-1.0
   main-is: test/Day03Spec.hs
+  other-modules:
+      Paths_aoc2021
+  ghc-options: -O2 -Wall -fno-warn-type-defaults -fno-warn-unused-do-bind -fwarn-tabs
+  build-depends:
+      HUnit
+    , aoc2021
+    , base >=4.10 && <5
+    , common
+    , parsec
+    , tasty
+    , tasty-hunit
+    , vector
+  default-language: Haskell2010
+
+test-suite day04
+  type: exitcode-stdio-1.0
+  main-is: test/Day04Spec.hs
   other-modules:
       Paths_aoc2021
   ghc-options: -O2 -Wall -fno-warn-type-defaults -fno-warn-unused-do-bind -fwarn-tabs
