@@ -6,6 +6,7 @@ import Test.Tasty
 
 import Day02
 
+tests :: [TestTree]
 tests = [testDay 2021 Day02.parts]
 
 -- main
