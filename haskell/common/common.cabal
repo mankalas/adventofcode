@@ -41,6 +41,7 @@ test-suite common-test
   main-is: Spec.hs
   other-modules:
       GridSpec
+      MyParserSpec
       Paths_common
   hs-source-dirs:
       test
