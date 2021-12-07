@@ -14,6 +14,7 @@ library
       Grid
       IntHelper
       MyList
+      MyTuple
       StringHelper
   other-modules:
       Paths_common
