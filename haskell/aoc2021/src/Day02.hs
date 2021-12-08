@@ -72,12 +72,12 @@ navigateWithAim cmds =
 -- exports
 part1 :: PartSolution
 part1 input =
-  let (h, d) = navigate $ parseInput commands input
+  let (h, d) = navigate $ parseWith commands input
    in show $ h * d
 
 part2 :: PartSolution
 part2 input =
-  let (h, d) = navigateWithAim $ parseInput commands input
+  let (h, d) = navigateWithAim $ parseWith commands input
    in show $ h * d
 
 parts :: DaySolutions

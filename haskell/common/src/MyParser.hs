@@ -1,25 +1,25 @@
 -- |
 module MyParser where
 
-import Control.Monad (ap)
-import Text.Parsec.Char
-import Text.ParserCombinators.Parsec
+import Text.Parsec
+import Text.Parsec.String (Parser)
 
-int :: GenParser Char st Int
-int = ap sign nat
+-- elements
+lexeme :: Parser a -> Parser a
+lexeme p = p <* spaces
 
-sign :: Num a => CharParser st (a -> a)
-sign = (char '-' >> return negate) <|> (optional (char '+') >> return id)
+number :: Parser Int
+number =
+  lexeme $ choice [char '-' *> fmap negate digits, char '+' *> digits, digits]
+  where
+    digits = read <$> many1 digit
 
-nat :: CharParser st Int
-nat =
-  do char '0' >> return 0
-     <|> do
-    n <- many1 digit
-    return (read n)
+symbol :: String -> Parser String
+symbol = lexeme . try . string
 
-ints :: CharParser st [Int]
-ints = int `sepBy` (char ',')
+-- parsing
+parseWith :: Parser a -> String -> a
+parseWith p = either (error . show) id . (parse p "(unknown)")
 
-parseInput :: CharParser () a -> String -> a
-parseInput p = (either (error . show) id) . (parse p "(unknown)")
+parseLinesWith :: Parser a -> String -> [a]
+parseLinesWith p s = parseWith p <$> lines s

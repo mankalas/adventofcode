@@ -1,9 +1,30 @@
 -- |
 module Grid where
 
+import Data.List as L
 import qualified Data.Map.Strict as M
 
 type Coord = (Int, Int)
+
+type Grid a = [[a]]
+
+row :: Grid a -> Int -> [a]
+row g n = g !! n
+
+column :: Grid a -> Int -> [a]
+column g n = (transpose g) !! n
+
+filter :: (a -> Bool) -> Grid a -> [a]
+filter f = L.filter f . concat
+
+rowsAndCols :: Grid a -> [[a]]
+rowsAndCols g = g ++ transpose g
+
+anyRowOrCol :: (a -> Bool) -> Grid a -> Bool
+anyRowOrCol f = any (all f) . rowsAndCols
+
+findRowOrCol :: (a -> Bool) -> Grid a -> Maybe [a]
+findRowOrCol f = find (all f) . rowsAndCols
 
 up :: Coord -> Coord
 up (x, y) = (x, y + 1)
