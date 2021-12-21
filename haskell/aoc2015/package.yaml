@@ -1,4 +1,4 @@
-name: aoc{{year}}
+name: aoc2015
 
 ghc-options:
   - -O2
@@ -18,3 +18,7 @@ library:
   source-dirs: src
 
 tests:
+  day01:
+    main: test/Day01Spec.hs
+    dependencies:
+      - aoc2015

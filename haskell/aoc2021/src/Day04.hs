@@ -39,7 +39,6 @@ play draws@(n:ns) bs =
 result :: [Int] -> [Board] -> Int
 result ns bs =
   let (draws, winner) = play ns bs
-      drs = takeWhile ( -> all (not . hasWon) bs) ns
    in sumBoard (\i -> i `elem` draws) winner *
       sumBoard (\i -> i `notElem` draws) winner
 

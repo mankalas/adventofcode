@@ -39,4 +39,3 @@ tests:
     main: test/Day04Spec.hs
     dependencies:
       - aoc2021
-

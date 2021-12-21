@@ -36,6 +36,7 @@ resolver: lts-16.23
 # non-dependency (i.e. a user package), and its test suites and benchmarks
 # will not be run. This is useful for tweaking upstream packages.
 packages:
+  - aoc2015
   - aoc2017
   - aoc2021
   - common

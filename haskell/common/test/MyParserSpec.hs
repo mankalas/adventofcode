@@ -7,23 +7,26 @@ import Test.Tasty.HUnit
 import MyParser
 
 tests :: [TestTree]
-tests = [intsTest, intTest]
+tests = [numbersTest, numberTest]
 
-intsTest :: TestTree
-intsTest =
-  testCase "ints" $ do
-    parseWith ints "1,2,314" @?= [1, 2, 314]
-    parseWith ints "1" @?= [1]
-    parseWith ints "" @?= []
+numbersTest :: TestTree
+numbersTest =
+  testCase "numbers" $ do
+    parseWith (numbers ",") "1,2,314" @?= [1, 2, 314]
+    parseWith (numbers "@") "1@2@314" @?= [1, 2, 314]
+    parseWith (numbers "") "12314" @?= [12314]
+    parseWith (numbers "") "1,2,314" @?= [1]
+    parseWith (numbers "") "1234" @?= [1234]
+    parseWith (numbers "") "" @?= []
 
 numberTest :: TestTree
 numberTest =
-  testCase "int" $ do
-    parseWith int "0" @?= 0
-    parseWith int "1" @?= 1
-    parseWith int "-1" @?= -1
-    parseWith int "42" @?= 42
-    parseWith int "-42" @?= -42
+  testCase "number" $ do
+    parseWith number "0" @?= 0
+    parseWith number "1" @?= 1
+    parseWith number "-1" @?= -1
+    parseWith number "42" @?= 42
+    parseWith number "-42" @?= -42
 
 myParserTest :: TestTree
 myParserTest = testGroup "MyParser" tests

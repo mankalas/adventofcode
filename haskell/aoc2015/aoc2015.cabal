@@ -1,0 +1,42 @@
+cabal-version: 1.12
+
+-- This file has been generated from package.yaml by hpack version 0.34.4.
+--
+-- see: https://github.com/sol/hpack
+
+name:           aoc2015
+version:        0.0.0
+build-type:     Simple
+
+library
+  exposed-modules:
+      Day01
+  other-modules:
+      Paths_aoc2015
+  hs-source-dirs:
+      src
+  ghc-options: -O2 -Wall -fno-warn-type-defaults -fno-warn-unused-do-bind -fwarn-tabs
+  build-depends:
+      HUnit
+    , base >=4.10 && <5
+    , common
+    , containers
+    , tasty
+    , tasty-hunit
+  default-language: Haskell2010
+
+test-suite day01
+  type: exitcode-stdio-1.0
+  main-is: test/Day01Spec.hs
+  other-modules:
+      Paths_aoc2015
+  ghc-options: -O2 -Wall -fno-warn-type-defaults -fno-warn-unused-do-bind -fwarn-tabs
+  build-depends:
+      HUnit
+    , aoc2015
+    , base >=4.10 && <5
+    , common
+    , containers
+    , tasty
+    , tasty-hunit
+  default-language: Haskell2010

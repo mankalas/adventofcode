@@ -26,7 +26,7 @@ if [ ! -e $file_name ]; then
     curl -s -o $file_name https://adventofcode.com/$y/day/$d/input -X GET -H 'Cookie: session=53616c7465645f5f4a4f4ceddcec706e8c87b74bd4ee018181466861443d2429a410699c8556396ffd0486e9f7a23820'
     echo done
 else
-    echo "$file_name already exists"
+    echo "$file_name already exists."
 fi
 cd ../..
 echo "Puzzle's input done."
@@ -41,10 +41,14 @@ if [ ! -d $output_year ]; then
 fi
 echo "Entering $output_year..."
 cd $output_year
-touch day_"$pad_d"_part_1
-touch day_"$pad_d"_part_2
+if [ ! -e $file_name ]; then
+    touch day_"$pad_d"_part_1
+    touch day_"$pad_d"_part_2
+else
+    echo "Output already exists."
+fi
 cd ../..
-echo "Puzzle's output done"
+echo "Puzzle's output done."
 
 # Mustache
 data="---
@@ -58,6 +62,18 @@ echo $data
 # Haskell
 echo "Generating Haskell files..."
 cd haskell
+
+## aoc package
+if [ ! -d aoc$y ]; then
+    echo "AoC $y package doesn't exist. Creating..."
+    mkdir aoc$y
+    echo $data | mustache - templates/package.yaml.mustache > aoc$y/package.yaml
+    mkdir aoc$y/src aoc$y/test
+    echo "      - aoc$y" >> package.yaml
+    echo "Done."
+fi
+
+## Day
 echo $data | mustache - templates/Day.hs.mustache > aoc$y/src/Day"$pad_d".hs
 echo $data | mustache - templates/DaySpec.hs.mustache > aoc$y/test/Day"$pad_d"Spec.hs
 echo "

@@ -1,8 +1,14 @@
 cradle:
   stack:
+    - path: "./aoc2015/src"
+      component: "aoc2015:lib"
+    - path: "./aoc2015/test"
+      component: "aoc2015:test:aoc2015-test"
     - path: "./aoc2017/src"
       component: "aoc2017:lib"
-    - path: "./aoc2017/app"
-      component: "aoc2017:exe:aoc2017-exe"
     - path: "./aoc2017/test"
       component: "aoc2017:test:aoc2017-test"
+    - path: "./aoc2021/src"
+      component: "aoc2021:lib"
+    - path: "./aoc2021/test"
+      component: "aoc2021:test:aoc2021-test"

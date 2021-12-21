@@ -14,6 +14,9 @@ number =
   where
     digits = read <$> many1 digit
 
+numbers :: String -> Parser [Int]
+numbers s = number `sepBy` symbol s
+
 symbol :: String -> Parser String
 symbol = lexeme . try . string
 
