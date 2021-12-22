@@ -13,6 +13,7 @@ dependencies:
   - tasty
   - tasty-hunit
   - HUnit
+  - parsec
 
 library:
   source-dirs: src
@@ -20,5 +21,10 @@ library:
 tests:
   day01:
     main: test/Day01Spec.hs
+    dependencies:
+      - aoc2015
+
+  day02:
+    main: test/Day02Spec.hs
     dependencies:
       - aoc2015

@@ -3,11 +3,12 @@ module Main where
 
 import Test.Tasty
 
+import GeometrySpec (geometryTest)
 import GridSpec (gridTest)
 import MyParserSpec (myParserTest)
 
 tests :: [TestTree]
-tests = [gridTest, myParserTest]
+tests = [gridTest, myParserTest, geometryTest]
 
 main :: IO ()
 main = do
