@@ -49,3 +49,11 @@ count_ = sortBy (compare `on` snd) . count
 
 lh :: [a] -> (a, Int)
 lh = liftA2 (,) head length
+
+distribute2 :: [a] -> ([a], [a])
+distribute2 [] = ([], [])
+distribute2 [x] = ([x], [])
+distribute2 [x, y] = ([x], [y])
+distribute2 (x1:x2:xs) =
+  let (dx, dy) = distribute2 xs
+   in (x1 : dx, x2 : dy)

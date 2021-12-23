@@ -43,6 +43,7 @@ test-suite common-test
   other-modules:
       GeometrySpec
       GridSpec
+      MyListSpec
       MyParserSpec
       Paths_common
   hs-source-dirs:

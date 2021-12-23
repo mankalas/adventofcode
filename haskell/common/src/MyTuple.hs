@@ -15,3 +15,6 @@ map2 (f, g) a = (map f a, map g a)
 
 dot2 :: (b -> c) -> (a1 -> b, a2 -> b) -> (a1 -> c, a2 -> c)
 dot2 h (f, g) = (h . f, h . g)
+
+combine :: (a -> b -> c) -> (a, b) -> c
+combine f (a, b) = f a b

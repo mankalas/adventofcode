@@ -8,7 +8,9 @@ import Text.Parsec
 
 import AoC
 import Grid
+import MyList
 import MyParser
+import MyTuple
 
 parseDirections :: String -> [Direction]
 parseDirections =
@@ -18,15 +20,18 @@ parseDirections =
        (char '<' >> return West) <|>
        (char '>' >> return East))
 
+deliver :: String -> [Coord]
+deliver s =
+  let (end, houses) =
+        mapAccumL (\pos dir -> (go pos dir, pos)) (0, 0) $ parseDirections s
+   in houses ++ [end]
+
 -- exports
 part1 :: PartSolution
-part1 s =
-  let directions = parseDirections s
-      (_, houses) = mapAccumL (\pos dir -> (go pos dir, pos)) (0, 0) directions
-   in show $ length $ nubOrd houses
+part1 = show . length . nubOrd . deliver
 
 part2 :: PartSolution
-part2 s = ""
+part2 = show . length . nubOrd . combine (++) . ap2 deliver . distribute2
 
 parts :: DaySolutions
 parts = (3, part1, part2)
