@@ -2,9 +2,9 @@
 module Main where
 
 import AoC (testDay)
-import Test.Tasty
+import Test.Tasty (TestTree, defaultMain, testGroup)
 
-import Day03
+import Day03 (parts)
 
 tests :: [TestTree]
 tests = [testDay 2015 Day03.parts]

@@ -22,7 +22,7 @@ library:
     - HUnit
 
 tests:
-  common-test:
+  tests:
     main:                Spec.hs
     source-dirs:         test
     ghc-options:

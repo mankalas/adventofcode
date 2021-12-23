@@ -2,15 +2,15 @@ module Day03
   ( parts
   ) where
 
-import Data.Containers.ListUtils
-import Data.List
-import Text.Parsec
+import Data.Containers.ListUtils (nubOrd)
+import Data.List (mapAccumL)
+import Text.Parsec ((<|>), char, many)
 
-import AoC
-import Grid
-import MyList
-import MyParser
-import MyTuple
+import AoC (DaySolutions, PartSolution)
+import Grid (Coord, Direction(..), go)
+import MyList (distribute2)
+import MyParser (parseWith)
+import MyTuple (ap2, combine)
 
 parseDirections :: String -> [Direction]
 parseDirections =

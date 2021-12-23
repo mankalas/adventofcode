@@ -2,9 +2,15 @@ module Day02
   ( parts
   ) where
 
-import AoC
+import AoC (DaySolutions, PartSolution)
 import Geometry
-import MyParser
+  ( RectangularPrism(..)
+  , prismArea
+  , prismSmallestSideArea
+  , prismSmallestSidePerimeter
+  , prismVolume
+  )
+import MyParser (numbers, parseLinesWith)
 
 type Box = RectangularPrism
 
@@ -12,13 +18,13 @@ boxesParser :: String -> [Box]
 boxesParser =
   parseLinesWith $ do
     b <- numbers "x"
-    pure (RectangularPrism (b !! 0) (b !! 1) (b !! 2))
+    pure (RectangularPrism (head b) (b !! 1) (b !! 2))
 
 wrappingArea :: Box -> Int
-wrappingArea b = (prismArea b) + (prismSmallestSideArea b)
+wrappingArea b = prismArea b + prismSmallestSideArea b
 
 ribbonLength :: Box -> Int
-ribbonLength b = (prismVolume b) + (prismSmallestSidePerimeter b)
+ribbonLength b = prismVolume b + prismSmallestSidePerimeter b
 
 -- exports
 part1 :: PartSolution

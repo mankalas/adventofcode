@@ -2,7 +2,7 @@ module Day01
   ( parts
   ) where
 
-import AoC
+import AoC (DaySolutions, PartSolution)
 
 step :: Char -> Int -> Int
 step '(' i = i + 1
@@ -12,7 +12,7 @@ step _ i = i
 basement :: String -> Int -> Int -> Int
 basement [] _ idx = idx
 basement (x:xs) pos idx =
-  if (pos < 0)
+  if pos < 0
     then idx
     else basement xs (step x pos) (idx + 1)
 
