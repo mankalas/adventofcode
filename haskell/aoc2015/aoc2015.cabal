@@ -12,6 +12,7 @@ library
   exposed-modules:
       Day01
       Day02
+      Day03
   other-modules:
       Paths_aoc2015
   hs-source-dirs:
@@ -47,6 +48,23 @@ test-suite day01
 test-suite day02
   type: exitcode-stdio-1.0
   main-is: test/Day02Spec.hs
+  other-modules:
+      Paths_aoc2015
+  ghc-options: -O2 -Wall -fno-warn-type-defaults -fno-warn-unused-do-bind -fwarn-tabs
+  build-depends:
+      HUnit
+    , aoc2015
+    , base >=4.10 && <5
+    , common
+    , containers
+    , parsec
+    , tasty
+    , tasty-hunit
+  default-language: Haskell2010
+
+test-suite day03
+  type: exitcode-stdio-1.0
+  main-is: test/Day03Spec.hs
   other-modules:
       Paths_aoc2015
   ghc-options: -O2 -Wall -fno-warn-type-defaults -fno-warn-unused-do-bind -fwarn-tabs

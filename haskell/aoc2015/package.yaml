@@ -28,3 +28,9 @@ tests:
     main: test/Day02Spec.hs
     dependencies:
       - aoc2015
+
+  day03:
+    main: test/Day03Spec.hs
+    dependencies:
+      - aoc2015
+

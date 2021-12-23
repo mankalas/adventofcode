@@ -8,6 +8,13 @@ type Coord = (Int, Int)
 
 type Grid a = [[a]]
 
+data Direction
+  = North
+  | South
+  | West
+  | East
+  deriving (Show, Eq)
+
 row :: Grid a -> Int -> [a]
 row g n = g !! n
 
@@ -25,6 +32,14 @@ anyRowOrCol f = any (all f) . rowsAndCols
 
 findRowOrCol :: (a -> Bool) -> Grid a -> Maybe [a]
 findRowOrCol f = find (all f) . rowsAndCols
+
+go :: Coord -> Direction -> Coord
+go here there =
+  case there of
+    North -> up here
+    South -> down here
+    West -> left here
+    East -> right here
 
 up :: Coord -> Coord
 up (x, y) = (x, y + 1)
