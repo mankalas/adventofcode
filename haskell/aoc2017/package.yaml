@@ -24,7 +24,6 @@ library:
 
 tests:
   day01:
-    main: Day01Spec.hs
-    source-dirs: test
+    main: test/Day01Spec.hs
     dependencies:
       - aoc2017

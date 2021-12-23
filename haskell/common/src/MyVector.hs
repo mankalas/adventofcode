@@ -1,16 +1,10 @@
-module Common where
-
-import Debug.Trace
+-- |
+module MyVector where
 
 import qualified Data.Map.Strict as M
 import qualified Data.Vector as V
 
 type VInt = V.Vector (Int)
-
-type Solution = String -> String
-
-rowToInts :: String -> [Int]
-rowToInts = map read . words
 
 increment :: Int -> Int -> VInt -> VInt
 increment pos incr v = v V.// [(pos, v V.! pos + incr)]
@@ -36,27 +30,3 @@ simpleReverse v p l =
   let (v1, rv) = V.splitAt p v
       (v2, v3) = V.splitAt l rv
    in v1 V.++ V.reverse v2 V.++ v3
-
--- Grid
-type Coord = (Int, Int)
-
-up (x, y) = (x, y + 1)
-
-down (x, y) = (x, y - 1)
-
-left (x, y) = (x - 1, y)
-
-right (x, y) = (x + 1, y)
-
-north p = M.lookup (up p)
-
-south p = M.lookup (down p)
-
-west p = M.lookup (left p)
-
-east p = M.lookup (right p)
-
-cardinalPoints :: Coord -> M.Map Coord a -> [Maybe a]
-cardinalPoints c grid =
-  let neighbors = map (\f -> f c) [up, down, left, right]
-   in map (\n -> M.lookup n grid) neighbors

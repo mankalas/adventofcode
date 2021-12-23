@@ -1,14 +1,21 @@
 cradle:
   stack:
+    - path: "./common/src"
+      component: "common"
+    - path: "./common/test"
+      component: "common:test"
+
     - path: "./aoc2015/src"
-      component: "aoc2015:lib"
+      component: "aoc2015"
     - path: "./aoc2015/test"
-      component: "aoc2015:test:aoc2015-test"
+      component: "aoc2015:test"
+
     - path: "./aoc2017/src"
-      component: "aoc2017:lib"
+      component: "aoc2017"
     - path: "./aoc2017/test"
-      component: "aoc2017:test:aoc2017-test"
+      component: "aoc2017:test"
+
     - path: "./aoc2021/src"
-      component: "aoc2021:lib"
+      component: "aoc2021"
     - path: "./aoc2021/test"
-      component: "aoc2021:test:aoc2021-test"
+      component: "aoc2021:test"

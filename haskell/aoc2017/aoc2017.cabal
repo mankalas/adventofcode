@@ -48,11 +48,9 @@ library
 
 test-suite day01
   type: exitcode-stdio-1.0
-  main-is: Day01Spec.hs
+  main-is: test/Day01Spec.hs
   other-modules:
       Paths_aoc2017
-  hs-source-dirs:
-      test
   ghc-options: -O2 -Wall -fno-warn-type-defaults -fno-warn-unused-do-bind -fwarn-tabs
   build-depends:
       HUnit

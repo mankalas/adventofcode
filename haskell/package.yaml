@@ -6,10 +6,17 @@ maintainer:          "mankalas@gmail.com"
 dependencies:
 - base >= 4.10 && < 5
 
+library:
+  dependencies:
+    - common
+    - aoc2015
+    - aoc2017
+    - aoc2021
+
 tests:
   haskell-test:
     dependencies:
       - common
+      - aoc2015
       - aoc2017
       - aoc2021
-      - aoc2015

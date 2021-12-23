@@ -17,6 +17,7 @@ library
       MyList
       MyParser
       MyTuple
+      MyVector
       StringHelper
   other-modules:
       Paths_common
