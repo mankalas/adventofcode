@@ -12,8 +12,10 @@ cradle:
 
     - path: "./aoc2017/src"
       component: "aoc2017"
+    - path: "./aoc2017/test"
+      component: "aoc2017:day01"
 
     - path: "./aoc2021/src"
       component: "aoc2021"
     - path: "./aoc2021/test"
-      component: "aoc2021:day04"
+      component: "aoc2021:day01"

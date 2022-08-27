@@ -1,11 +1,11 @@
 module Day04 where
 
-import Data.List as L
-import Text.Parsec as P
+import Data.List as L (find)
+import Text.Parsec as P (count, many, sepBy)
 
-import AoC
-import Grid as G
-import MyParser
+import AoC (DaySolutions, PartSolution)
+import Grid as G (Grid, anyRowOrCol, filter)
+import MyParser (number, parseWith, symbol)
 
 type Board = G.Grid Int
 
@@ -24,10 +24,10 @@ sumBoard :: (Int -> Bool) -> Board -> Int
 sumBoard cellFilter = sum . G.filter cellFilter
 
 draw :: Int -> [Board] -> [Board]
-draw n bs = bs
+draw _ bs = bs
 
 hasWon :: [Int] -> Board -> Bool
-hasWon draws board = anyRowOrCol (\cell -> cell `elem` draws) board
+hasWon draws = anyRowOrCol (`elem` draws)
 
 play :: [Int] -> [Board] -> ([Int], Board)
 play [] _ = ([], [])
@@ -39,8 +39,7 @@ play draws@(n:ns) bs =
 result :: [Int] -> [Board] -> Int
 result ns bs =
   let (draws, winner) = play ns bs
-   in sumBoard (\i -> i `elem` draws) winner *
-      sumBoard (\i -> i `notElem` draws) winner
+   in sumBoard (`elem` draws) winner * sumBoard (`notElem` draws) winner
 
 -- exports
 part1 :: PartSolution

@@ -3,23 +3,22 @@ module Day14
   , part2
   ) where
 
-import Common
 import Day10 (knotHash)
-
-import Debug.Trace
 
 import Data.Char (digitToInt, intToDigit)
 import Data.List (intercalate)
-import qualified Data.Map.Strict as M
 import qualified Data.Set as S
 import qualified Data.Vector as V
+import Grid (down, left, right, up)
 import Numeric (readHex, showIntAtBase)
 
-type Grid = V.Vector (VInt)
+import MyVector
 
-type RegionGrid = M.Map Coord Int
+type Coord = (Int, Int)
 
-type SCoord = S.Set (Coord)
+type Grid = V.Vector VInt
+
+type SCoord = S.Set Coord
 
 paddedBin :: Char -> String
 paddedBin c =
@@ -48,35 +47,29 @@ nextCell (127, y) = (0, y + 1)
 nextCell (x, y) = (x + 1, y)
 
 countRegions :: Grid -> Int
-countRegions grid = countRegions_ (0, 0) 0 S.empty grid
-
-maybeInsert :: Coord -> Grid -> SCoord -> SCoord
-maybeInsert c g s =
-  if Day14.lookup c g == 1
-    then S.insert c s
-    else s
+countRegions g = countRegions_ (0, 0) 0 S.empty g
 
 exploreRegion :: Grid -> SCoord -> Coord -> SCoord
-exploreRegion grid s c@(x, y) =
-  let v = Day14.lookup c grid
+exploreRegion g s c =
+  let v = Day14.lookup c g
       seen = S.member c s
       new_s = S.insert c s
    in if v == 0 || seen
         then s
         else foldl
-               (exploreRegion grid)
+               (exploreRegion g)
                new_s
                [up (c), down (c), left (c), right (c)]
 
 countRegions_ :: Coord -> Int -> SCoord -> Grid -> Int
 countRegions_ (0, 128) num_regs _ _ = num_regs
-countRegions_ c@(x, y) num_regs s grid =
-  let v = Day14.lookup c grid
+countRegions_ c num_regs s g =
+  let v = Day14.lookup c g
       seen = S.member c s
       nc = nextCell c
    in if v == 0 || seen
-        then countRegions_ nc num_regs s grid
-        else countRegions_ nc (num_regs + 1) (exploreRegion grid s c) grid
+        then countRegions_ nc num_regs s g
+        else countRegions_ nc (num_regs + 1) (exploreRegion g s c) g
 
 -- export
 part1 :: String -> String

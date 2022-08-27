@@ -3,19 +3,14 @@ module Day07
   , part2
   ) where
 
-import Parser
-
-import Text.Parsec.Char
-import Text.ParserCombinators.Parsec
-
-import Debug.Trace
-
-import Data.Either
-import Data.List
+import Data.List (find)
 import qualified Data.Map.Strict as Map
-import Data.Maybe
+import Data.Maybe (fromMaybe, isJust)
+import Text.Parsec
+import Text.Parsec.String (Parser)
 
-import MyList
+import MyList (countElem, occurrences)
+import MyParser
 
 data Tree
   = Tree String Int [Tree]
@@ -27,13 +22,13 @@ type LeavesDef = Map.Map String (Int, [String])
 type LeafDef = (String, Int, [String])
 
 -- Parser
-file :: GenParser Char st [LeafDef]
+file :: Parser [LeafDef]
 file = do
   result <- many line
   eof
   return result
 
-line :: GenParser Char st LeafDef
+line :: Parser LeafDef
 line = do
   n <- many alphaNum
   _ <- char ' '
@@ -42,14 +37,14 @@ line = do
   _ <- endOfLine
   return (n, w, c)
 
-weight :: GenParser Char st Int
+weight :: Parser Int
 weight = do
   _ <- char '('
   w <- many digit
   _ <- char ')'
   return $ read w
 
-children :: GenParser Char st [String]
+children :: Parser [String]
 children = do
   first <- child
   next <- remainingChildren
@@ -57,30 +52,32 @@ children = do
     then return []
     else return (first : next)
 
-child :: GenParser Char st String
+child :: Parser String
 child =
   try
     (do _ <- string " -> "
-        c <- many (noneOf ",\n")
-        return c) <|>
+        many (noneOf ",\n")) <|>
   many (noneOf ",\n")
 
-remainingChildren :: GenParser Char st [String]
+remainingChildren :: Parser [String]
 remainingChildren = (string ", " >> children) <|> return []
 
 -- Tree
 treeHasName :: String -> Tree -> Bool
-treeHasName s (Tree n _ c) = (n == s) || (or $ map (treeHasName s) c)
+treeHasName s (Tree n _ c) = (n == s) || any (treeHasName s) c
+treeHasName _ Void = False
 
 treeHasNode :: Tree -> Tree -> Bool
 treeHasNode (Tree n _ c) target@(Tree s _ _) =
-  (n == s) || (or $ map (treeHasNode target) c)
+  (n == s) || any (treeHasNode target) c
+treeHasNode _ _ = False
 
 treeNode :: String -> Tree -> Maybe Tree
 treeNode name t@(Tree n _ c)
   | n == name = Just t
   | null c = Nothing
   | otherwise = find (isJust . treeNode name) c
+treeNode _ Void = Nothing
 
 buildTree :: LeavesDef -> Tree
 buildTree m = buildTree_ m (Tree "" (-1) []) (Map.keys m)
@@ -96,46 +93,50 @@ buildTree_ m t keys@(x:xs)
      in buildTree_ m cleaned_tree xs
 
 removeOrphans :: Tree -> Tree -> Tree
-removeOrphans o t@(Tree n w c) = Tree n w $ o : unrelated_orphans
+removeOrphans o (Tree n w c) = Tree n w $ o : unrelated_orphans
   where
     unrelated_orphans = filter (not_has o) c
     not_has source target = not $ treeHasNode source target
+removeOrphans _ _ = Void
 
 buildOrphan :: LeavesDef -> Tree -> String -> Tree
 buildOrphan m t n =
-  let (weight, children) = fromMaybe (-1, []) $ Map.lookup n m
+  let (w, c) = fromMaybe (-1, []) $ Map.lookup n m
    in case treeNode n t of
-        Nothing -> Tree n weight $ map (buildOrphan m t) children
+        Nothing -> Tree n w $ map (buildOrphan m t) c
         Just x -> x
 
 buildMap :: [LeafDef] -> LeavesDef
-buildMap result =
-  foldl (\m (n, w, c) -> Map.insert n (w, c) m) Map.empty $ result
+buildMap = foldl (\m (n, w, c) -> Map.insert n (w, c) m) Map.empty
 
 treeWeight :: Tree -> Int
 treeWeight (Tree _ w c)
   | null c = w
-  | otherwise = w + (sum $ map treeWeight c)
+  | otherwise = w + sum (map treeWeight c)
+treeWeight Void = 0
 
 allIdentical :: Eq a => [a] -> Bool
-allIdentical l@(x:xs) = countElem x l == length l
+allIdentical l@(x:_) = countElem x l == length l
+allIdentical [] = True
 
 newWeight :: Int -> Tree -> Int -> Int
 newWeight source (Tree _ w _) target
   | source > target = w - source + target
   | otherwise = w + target - source
+newWeight _ _ _ = 0
 
 wrongWeight :: [Int] -> Int
 wrongWeight l =
   case find ((==) 1 . fst) $ occurrences l of
     Nothing -> error ("No wrong weight in " ++ show l)
-    Just (x, [y]) -> y
+    Just (_, [y]) -> y
+    Just _ -> error "Wrong weight"
 
 rightWeight :: [Int] -> Int
 rightWeight l =
   case find ((/=) 1 . fst) $ occurrences l of
     Nothing -> error ("There must be a right weight in " ++ show l)
-    Just (x, y) -> head y
+    Just (_, y) -> head y
 
 treeWithWeight :: [Tree] -> Int -> Tree
 treeWithWeight l i =
@@ -148,13 +149,13 @@ fixWeight t@(Tree _ w c) pw =
   let cw = map treeWeight c
    in if allIdentical cw
         then newWeight (w + sum cw) t pw
-        else let rw = rightWeight cw
-                 ww = wrongWeight cw
+        else let ww = wrongWeight cw
               in fixWeight (treeWithWeight c ww) (rightWeight cw)
+fixWeight _ _ = 0
 
 tree :: String -> Tree
 tree input =
-  let (Tree _ _ c) = buildTree $ buildMap $ parseInput file input
+  let (Tree _ _ c) = buildTree $ buildMap $ parseWith file input
    in head c
 
 -- exports

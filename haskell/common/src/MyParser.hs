@@ -2,6 +2,16 @@
 module MyParser where
 
 import Text.Parsec
+  ( char
+  , choice
+  , digit
+  , many1
+  , parse
+  , sepBy
+  , spaces
+  , string
+  , try
+  )
 import Text.Parsec.String (Parser)
 
 -- elements
@@ -22,7 +32,7 @@ symbol = lexeme . try . string
 
 -- parsing
 parseWith :: Parser a -> String -> a
-parseWith p = either (error . show) id . (parse p "(unknown)")
+parseWith p = either (error . show) id . parse p "(unknown)"
 
 parseLinesWith :: Parser a -> String -> [a]
 parseLinesWith p s = parseWith p <$> lines s

@@ -8,16 +8,16 @@ ghc-options:
   - -fwarn-tabs
 dependencies:
   - base >= 4.10 && < 5
+  - common
   - split
   - containers
+  - parsec
   - vector
   - vector-split
-  - parsec
   - either-unwrap
-  - common
   - tasty
   - tasty-hunit
-  - HUnit
+
 
 library:
   source-dirs: src

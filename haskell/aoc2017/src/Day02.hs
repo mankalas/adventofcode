@@ -1,6 +1,9 @@
-module Day02 (part1, part2) where
+module Day02
+  ( part1
+  , part2
+  ) where
 
-import Common
+import IntHelper
 
 type Calculation = [Int] -> Int
 
@@ -14,7 +17,6 @@ checksum :: Calculation -> String -> Int
 checksum f = sum . map (f . rowToInts) . lines
 
 -- exports
-
 part1 :: String -> String
 part1 = show . checksum deviation
 

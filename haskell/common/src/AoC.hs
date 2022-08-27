@@ -1,9 +1,9 @@
 -- |
 module AoC where
 
-import Test.Tasty
-import Test.Tasty.HUnit
-import Text.Printf
+import Test.Tasty (TestTree)
+import Test.Tasty.HUnit ((@?=), testCaseSteps)
+import Text.Printf (printf)
 
 type PartSolution = String -> String
 

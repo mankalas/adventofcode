@@ -2,12 +2,12 @@ module Day03
   ( parts
   ) where
 
-import Data.List
+import Data.List (maximumBy, minimumBy, partition, transpose)
 import Data.Ord (comparing)
 import MyTuple (ap2, call2, dot2, map2, toList)
 
-import AoC
-import StringHelper
+import AoC (DaySolutions, PartSolution)
+import StringHelper (binaryToInt)
 
 -- Split the list between 0s and 1s, compare the length of the
 -- resulting sub-lists and return the head (can be any char really) of
@@ -15,7 +15,7 @@ import StringHelper
 commonality ::
      ((String -> String -> Ordering) -> [String] -> String) -> String -> Char
 commonality electBy =
-  head . electBy (comparing length) . toList . partition ((==) '0')
+  head . electBy (comparing length) . toList . partition ('0' ==)
 
 mostCommon :: String -> Char
 mostCommon = commonality maximumBy
@@ -29,7 +29,7 @@ leastCommon = commonality minimumBy
 filter' :: (String -> Char) -> [String] -> Int -> String
 filter' _ [x] _ = x
 filter' fBit values i =
-  let relevantBit = fBit $ (transpose values !! i)
+  let relevantBit = fBit (transpose values !! i)
       survivors = filter (\e -> (e !! i) == relevantBit) values
    in filter' fBit survivors (i + 1)
 

@@ -15,6 +15,7 @@ library
       Day03
       Day04
       Day05
+      Day06
   other-modules:
       Paths_aoc2015
   hs-source-dirs:
@@ -22,6 +23,7 @@ library
   ghc-options: -O2 -Wall -fno-warn-type-defaults -fno-warn-unused-do-bind -fwarn-tabs
   build-depends:
       HUnit
+    , array
     , base >=4.10 && <5
     , bytestring
     , common
@@ -42,6 +44,7 @@ test-suite day01
   build-depends:
       HUnit
     , aoc2015
+    , array
     , base >=4.10 && <5
     , bytestring
     , common
@@ -62,6 +65,7 @@ test-suite day02
   build-depends:
       HUnit
     , aoc2015
+    , array
     , base >=4.10 && <5
     , bytestring
     , common
@@ -82,26 +86,7 @@ test-suite day03
   build-depends:
       HUnit
     , aoc2015
-    , base >=4.10 && <5
-    , bytestring
-    , common
-    , containers
-    , parsec
-    , pureMD5
-    , split
-    , tasty
-    , tasty-hunit
-  default-language: Haskell2010
-
-test-suite day04
-  type: exitcode-stdio-1.0
-  main-is: test/Day04Spec.hs
-  other-modules:
-      Paths_aoc2015
-  ghc-options: -O2 -Wall -fno-warn-type-defaults -fno-warn-unused-do-bind -fwarn-tabs
-  build-depends:
-      HUnit
-    , aoc2015
+    , array
     , base >=4.10 && <5
     , bytestring
     , common
@@ -122,6 +107,28 @@ test-suite day05
   build-depends:
       HUnit
     , aoc2015
+    , array
+    , base >=4.10 && <5
+    , bytestring
+    , common
+    , containers
+    , parsec
+    , pureMD5
+    , split
+    , tasty
+    , tasty-hunit
+  default-language: Haskell2010
+
+test-suite day06
+  type: exitcode-stdio-1.0
+  main-is: test/Day06Spec.hs
+  other-modules:
+      Paths_aoc2015
+  ghc-options: -O2 -Wall -fno-warn-type-defaults -fno-warn-unused-do-bind -fwarn-tabs
+  build-depends:
+      HUnit
+    , aoc2015
+    , array
     , base >=4.10 && <5
     , bytestring
     , common

@@ -3,10 +3,8 @@ module Day04
   , part2
   ) where
 
-import Common
-
 import Data.List (sort)
-import MyList
+import MyList (allUnique)
 
 -- code
 validate :: ([String] -> Bool) -> String -> String

@@ -2,9 +2,9 @@ module Day01
   ( parts
   ) where
 
-import AoC
-import IntHelper
-import MyList
+import AoC (DaySolutions, PartSolution)
+import IntHelper (linesToInts)
+import MyList (filterConsecutive, rotate)
 
 type Window = (Int, Int, Int)
 
@@ -14,9 +14,9 @@ depthIncrease (a, b) = a < b
 
 -- Compare a pair of depth windows by comparing their sum
 windowIncrease :: (Window, Window) -> Bool
-windowIncrease (a, b) = (sum3 a) < (sum3 b)
+windowIncrease (a, b) = sum3 a < sum3 b
   where
-    sum3 (a, b, c) = a + b + c
+    sum3 (x, y, z) = x + y + z
 
 createWindows :: [Int] -> [Window]
 createWindows d1 =

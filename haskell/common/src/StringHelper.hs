@@ -1,8 +1,8 @@
 -- |
 module StringHelper where
 
-import Data.Char
-import Data.List
+import Data.Char (ord)
+import Data.List (mapAccumR)
 
 binaryToInt :: String -> Int
 binaryToInt s =

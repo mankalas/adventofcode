@@ -1,12 +1,30 @@
 -- |
-module Grid where
+module Grid
+  ( Direction(North, South, West, East)
+  , Grid
+  , Coord
+  -- , row
+  -- , column
+  -- , Grid.filter
+  -- , rowsAndCols
+  -- , anyRowOrCol
+  -- , findRowOrCol
+  , go
+  , up
+  , down
+  , left
+  , right
+  , range
+  , range'
+  ) where
 
-import Data.List as L
-import qualified Data.Map.Strict as M
+import Data.Array hiding (range)
+import Data.List as L (filter, find, transpose)
+import Data.Vector as V
 
 type Coord = (Int, Int)
 
-type Grid a = [[a]]
+type Grid a = Array Coord a
 
 data Direction
   = North
@@ -15,24 +33,18 @@ data Direction
   | East
   deriving (Show, Eq)
 
-row :: Grid a -> Int -> [a]
-row g n = g !! n
-
-column :: Grid a -> Int -> [a]
-column g n = (transpose g) !! n
-
-filter :: (a -> Bool) -> Grid a -> [a]
-filter f = L.filter f . concat
-
-rowsAndCols :: Grid a -> [[a]]
-rowsAndCols g = g ++ transpose g
-
-anyRowOrCol :: (a -> Bool) -> Grid a -> Bool
-anyRowOrCol f = any (all f) . rowsAndCols
-
-findRowOrCol :: (a -> Bool) -> Grid a -> Maybe [a]
-findRowOrCol f = find (all f) . rowsAndCols
-
+-- row :: Grid a -> Int -> V.Vector a
+-- row g n = g !! n
+-- column :: Grid a -> Int -> V.Vector a
+-- column g n = V.transpose g !! n
+-- filter :: (a -> Bool) -> Grid a -> V.Vector a
+-- filter f = L.filter f . V.concat
+-- rowsAndCols :: Grid a -> [V.Vector a]
+-- rowsAndCols g = g V.++ transpose g
+-- anyRowOrCol :: (a -> Bool) -> Grid a -> Bool
+-- anyRowOrCol f = V.any (V.all f) . rowsAndCols
+-- findRowOrCol :: (a -> Bool) -> Grid a -> Maybe (V.Vector a)
+-- findRowOrCol f = V.find (V.all f) . rowsAndCols
 go :: Coord -> Direction -> Coord
 go here there =
   case there of
@@ -53,19 +65,8 @@ left (x, y) = (x - 1, y)
 right :: Coord -> Coord
 right (x, y) = (x + 1, y)
 
-north :: Coord -> M.Map Coord a -> Maybe a
-north p = M.lookup (up p)
+range :: Coord -> Coord -> [Coord]
+range (a, b) (x, y) = [(u, v) | u <- [a .. x], v <- [b .. y]]
 
-south :: Coord -> M.Map Coord a -> Maybe a
-south p = M.lookup (down p)
-
-west :: Coord -> M.Map Coord a -> Maybe a
-west p = M.lookup (left p)
-
-east :: Coord -> M.Map Coord a -> Maybe a
-east p = M.lookup (right p)
-
-cardinalPoints :: Coord -> M.Map Coord a -> [Maybe a]
-cardinalPoints c grid =
-  let neighbors = map (\f -> f c) [up, down, left, right]
-   in map (\n -> M.lookup n grid) neighbors
+range' :: Coord -> Coord -> [Coord]
+range' (a, b) (x, y) = (,) <$> [a .. x] <*> [b .. y]

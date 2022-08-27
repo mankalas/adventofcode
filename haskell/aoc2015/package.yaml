@@ -6,6 +6,7 @@ ghc-options:
   - -fno-warn-type-defaults
   - -fno-warn-unused-do-bind
   - -fwarn-tabs
+
 dependencies:
   - base >= 4.10 && < 5
   - containers
@@ -17,6 +18,7 @@ dependencies:
   - pureMD5
   - bytestring
   - split
+  - array
 
 library:
   source-dirs: src
@@ -37,13 +39,17 @@ tests:
     dependencies:
       - aoc2015
 
-
-  day04:
-    main: test/Day04Spec.hs
-    dependencies:
-      - aoc2015
+  # day04:
+  #   main: test/Day04Spec.hs
+  #   dependencies:
+  #     - aoc2015
 
   day05:
     main: test/Day05Spec.hs
+    dependencies:
+      - aoc2015
+
+  day06:
+    main: test/Day06Spec.hs
     dependencies:
       - aoc2015

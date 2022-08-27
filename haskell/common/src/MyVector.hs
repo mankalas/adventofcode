@@ -1,10 +1,9 @@
 -- |
 module MyVector where
 
-import qualified Data.Map.Strict as M
 import qualified Data.Vector as V
 
-type VInt = V.Vector (Int)
+type VInt = V.Vector Int
 
 increment :: Int -> Int -> VInt -> VInt
 increment pos incr v = v V.// [(pos, v V.! pos + incr)]

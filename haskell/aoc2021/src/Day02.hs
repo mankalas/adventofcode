@@ -2,11 +2,11 @@ module Day02
   ( parts
   ) where
 
-import Text.Parsec.Char
-import Text.ParserCombinators.Parsec
+import Text.Parsec.Char (char, digit, string)
+import Text.ParserCombinators.Parsec (Parser, (<|>), eof, many, many1)
 
-import AoC
-import MyParser
+import AoC (DaySolutions, PartSolution)
+import MyParser (parseWith)
 
 data Command
   = Forward Int

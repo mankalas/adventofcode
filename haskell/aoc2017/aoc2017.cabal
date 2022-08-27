@@ -10,7 +10,6 @@ build-type:     Simple
 
 library
   exposed-modules:
-      Common
       Day01
       Day02
       Day03
@@ -26,15 +25,13 @@ library
       Day13
       Day14
       Lib
-      Parser
   other-modules:
       Paths_aoc2017
   hs-source-dirs:
       src
   ghc-options: -O2 -Wall -fno-warn-type-defaults -fno-warn-unused-do-bind -fwarn-tabs
   build-depends:
-      HUnit
-    , base >=4.10 && <5
+      base >=4.10 && <5
     , common
     , containers
     , either-unwrap
@@ -53,8 +50,7 @@ test-suite day01
       Paths_aoc2017
   ghc-options: -O2 -Wall -fno-warn-type-defaults -fno-warn-unused-do-bind -fwarn-tabs
   build-depends:
-      HUnit
-    , aoc2017
+      aoc2017
     , base >=4.10 && <5
     , common
     , containers

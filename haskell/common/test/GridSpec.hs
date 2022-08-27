@@ -1,50 +1,38 @@
 -- |
 module GridSpec where
 
-import Test.Tasty
-import Test.Tasty.HUnit
+import Test.Tasty (TestTree, testGroup)
+import Test.Tasty.HUnit ((@?=), testCase)
 
-import Grid as G
+import Grid
+  ( Direction(East, North, South, West)
+  , column
+  , filter
+  , findRowOrCol
+  , go
+  , range
+  , range'
+  , row
+  )
 
 tests :: [TestTree]
-tests =
-  [ upTest
-  , downTest
-  , leftTest
-  , rightTest
-  , rowTest
-  , columnTest
-  , filterTest
-  , findRowOrColTest
-  ]
+tests = [goTest, rowTest, columnTest, filterTest, findRowOrColTest, rangeTest]
 
-upTest :: TestTree
-upTest =
-  testCase "up" $ do
-    up (0, 0) @?= (0, 1)
-    up (1, 1) @?= (1, 2)
-    up (-5, -5) @?= (-5, -4)
-
-downTest :: TestTree
-downTest =
-  testCase "down" $ do
-    down (0, 0) @?= (0, -1)
-    down (1, 1) @?= (1, 0)
-    down (-5, -5) @?= (-5, -6)
-
-leftTest :: TestTree
-leftTest =
-  testCase "left" $ do
-    left (0, 0) @?= (-1, 0)
-    left (1, 1) @?= (0, 1)
-    left (-5, -5) @?= (-6, -5)
-
-rightTest :: TestTree
-rightTest =
-  testCase "right" $ do
-    right (0, 0) @?= (1, 0)
-    right (1, 1) @?= (2, 1)
-    right (-5, -5) @?= (-4, -5)
+goTest :: TestTree
+goTest =
+  testCase "go" $ do
+    go (0, 0) North @?= (0, 1)
+    go (1, 1) North @?= (1, 2)
+    go (-5, -5) North @?= (-5, -4)
+    go (0, 0) South @?= (0, -1)
+    go (1, 1) South @?= (1, 0)
+    go (-5, -5) South @?= (-5, -6)
+    go (0, 0) West @?= (-1, 0)
+    go (1, 1) West @?= (0, 1)
+    go (-5, -5) West @?= (-6, -5)
+    go (0, 0) East @?= (1, 0)
+    go (1, 1) East @?= (2, 1)
+    go (-5, -5) East @?= (-4, -5)
 
 rowTest :: TestTree
 rowTest =
@@ -61,7 +49,7 @@ columnTest =
 filterTest :: TestTree
 filterTest =
   testCase "filter" $ do
-    G.filter odd [[1, 2, 3], [4, 5, 6], [7, 8, 9]] @?= [1, 3, 5, 7, 9]
+    Grid.filter odd [[1, 2, 3], [4, 5, 6], [7, 8, 9]] @?= [1, 3, 5, 7, 9]
 
 findRowOrColTest :: TestTree
 findRowOrColTest =
@@ -70,6 +58,14 @@ findRowOrColTest =
     findRowOrCol odd [[1, 3], [2, 4]] @?= Just [1, 3]
     findRowOrCol odd [[2, 4], [6, 8]] @?= Nothing
     findRowOrCol odd [[2, 1], [3, 4]] @?= Nothing
+
+rangeTest :: TestTree
+rangeTest =
+  testCase "range / range'" $ do
+    range (0, 0) (2, 2) @?=
+      [(0, 0), (0, 1), (0, 2), (1, 0), (1, 1), (1, 2), (2, 0), (2, 1), (2, 2)]
+    range' (0, 0) (2, 2) @?=
+      [(0, 0), (0, 1), (0, 2), (1, 0), (1, 1), (1, 2), (2, 0), (2, 1), (2, 2)]
 
 gridTest :: TestTree
 gridTest = testGroup "Grid" tests
