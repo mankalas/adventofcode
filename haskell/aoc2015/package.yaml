@@ -37,7 +37,6 @@ tests:
     dependencies:
       - aoc2015
 
-
   day04:
     main: test/Day04Spec.hs
     dependencies:
@@ -45,5 +44,10 @@ tests:
 
   day05:
     main: test/Day05Spec.hs
+    dependencies:
+      - aoc2015
+
+  day06:
+    main: test/Day06Spec.hs
     dependencies:
       - aoc2015

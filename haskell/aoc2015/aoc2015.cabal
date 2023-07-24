@@ -1,6 +1,6 @@
 cabal-version: 1.12
 
--- This file has been generated from package.yaml by hpack version 0.34.4.
+-- This file has been generated from package.yaml by hpack version 0.35.0.
 --
 -- see: https://github.com/sol/hpack
 
@@ -15,6 +15,7 @@ library
       Day03
       Day04
       Day05
+      Day06
   other-modules:
       Paths_aoc2015
   hs-source-dirs:
@@ -116,6 +117,26 @@ test-suite day04
 test-suite day05
   type: exitcode-stdio-1.0
   main-is: test/Day05Spec.hs
+  other-modules:
+      Paths_aoc2015
+  ghc-options: -O2 -Wall -fno-warn-type-defaults -fno-warn-unused-do-bind -fwarn-tabs
+  build-depends:
+      HUnit
+    , aoc2015
+    , base >=4.10 && <5
+    , bytestring
+    , common
+    , containers
+    , parsec
+    , pureMD5
+    , split
+    , tasty
+    , tasty-hunit
+  default-language: Haskell2010
+
+test-suite day06
+  type: exitcode-stdio-1.0
+  main-is: test/Day06Spec.hs
   other-modules:
       Paths_aoc2015
   ghc-options: -O2 -Wall -fno-warn-type-defaults -fno-warn-unused-do-bind -fwarn-tabs

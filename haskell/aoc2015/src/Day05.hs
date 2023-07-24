@@ -21,7 +21,8 @@ b _ = False
 c :: String -> Bool
 c =
   not .
-  any (`elem` [('a', 'b'), ('c', 'd'), ('p', 'q'), ('x', 'y')]) . consecutives
+  any (`elem` [('a', 'b'), ('c', 'd'), ('p', 'q'), ('x', 'y')]) .
+  consecutives
 
 -- It contains a pair of any two letters that appears at least twice
 -- in the string without overlapping, like xyxy (xy) or aabcdefgaa
