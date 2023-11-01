@@ -14,3 +14,7 @@ Style/StringLiteralsInInterpolation:
 
 Layout/LineLength:
   Max: 120
+
+Naming/MethodParameterName:
+  MinNameLength: 1
+  Enabled: false
