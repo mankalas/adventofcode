@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
-require_relative "lib/aoe_ruby/version"
+require_relative "lib/aoc_ruby/version"
 
 Gem::Specification.new do |spec|
-  spec.name = "aoe_ruby"
-  spec.version = AoeRuby::VERSION
+  spec.name = "aoc_ruby"
+  spec.version = AocRuby::VERSION
   spec.authors = ["Vincent Boucheny"]
   spec.email = ["mankalas@gmail.com"]
 
