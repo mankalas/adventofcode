@@ -25,4 +25,11 @@ class Utils
   def self.output_dir(klass, part)
     File.read("#{root_dir(klass, "output")}_part_#{part}")
   end
+
+  def self.bin_not(n, nb_bits: 16)
+    n.to_s(2).rjust(nb_bits, "0").chars
+     .map { |c| { "0" => "1", "1" => "0" }[c] }
+     .join.reverse.chars.each.with_index
+     .inject(0) { |acc, (c, i)| acc + (2**i) * (c == "1" ? 1 : 0) }
+  end
 end

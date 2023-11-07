@@ -1,13 +1,15 @@
 PATH
   remote: .
   specs:
-    aoe_ruby (0.1.0)
+    aoc_ruby (1.0)
+      bindata
       parslet (~> 2.0)
 
 GEM
   remote: https://rubygems.org/
   specs:
     ast (2.4.2)
+    bindata (2.4.15)
     diff-lcs (1.5.0)
     json (2.6.3)
     language_server-protocol (3.17.0.3)
@@ -54,7 +56,7 @@ PLATFORMS
   arm64-darwin-22
 
 DEPENDENCIES
-  aoe_ruby!
+  aoc_ruby!
   rake (~> 13.0)
   rspec (~> 3.0)
   rubocop (~> 1.21)

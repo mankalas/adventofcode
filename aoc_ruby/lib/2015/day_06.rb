@@ -2,35 +2,6 @@
 
 require "parslet"
 
-Coord = Struct.new(:x, :y)
-Instruction = Struct.new(:action, :start, :finish)
-
-class Parser < Parslet::Parser
-  rule(:space)      { match('\s').repeat(1) }
-  rule(:space?)     { space.maybe }
-  rule(:integer) { match("[0-9]").repeat(1) }
-  rule(:coord) { integer.as(:x) >> str(",") >> integer.as(:y) }
-  rule(:action) { str("toggle") | str("turn off") | str("turn on") }
-
-  rule(:instruction) do
-    action.as(:action) >>
-      str(" ") >>
-      coord.as(:start) >>
-      str(" through ") >>
-      coord.as(:finish) >>
-      space?
-  end
-  root(:instruction)
-end
-
-class Transform < Parser::Transform
-  rule(action: simple(:action), start: subtree(:start), finish: subtree(:finish)) do
-    Instruction.new(action.to_s.sub(" ", "_").to_sym, start, finish)
-  end
-
-  rule(x: simple(:x), y: simple(:y)) { Coord.new(x.to_i, y.to_i) }
-end
-
 module AoC2015
   class Day06
     def part1(input)
@@ -91,6 +62,35 @@ module AoC2015
       Transform.new.apply(Parser.new.parse(line))
     rescue Parslet::ParseFailed => e
       puts e.parse_failure_cause.ascii_tree
+    end
+
+    Coord = Struct.new(:x, :y)
+    Instruction = Struct.new(:action, :start, :finish)
+
+    class Parser < Parslet::Parser
+      rule(:space)      { match('\s').repeat(1) }
+      rule(:space?)     { space.maybe }
+      rule(:integer) { match("[0-9]").repeat(1) }
+      rule(:coord) { integer.as(:x) >> str(",") >> integer.as(:y) }
+      rule(:action) { str("toggle") | str("turn off") | str("turn on") }
+
+      rule(:instruction) do
+        action.as(:action) >>
+          str(" ") >>
+          coord.as(:start) >>
+          str(" through ") >>
+          coord.as(:finish) >>
+          space?
+      end
+      root(:instruction)
+    end
+
+    class Transform < Parser::Transform
+      rule(action: simple(:action), start: subtree(:start), finish: subtree(:finish)) do
+        Instruction.new(action.to_s.sub(" ", "_").to_sym, start, finish)
+      end
+
+      rule(x: simple(:x), y: simple(:y)) { Coord.new(x.to_i, y.to_i) }
     end
   end
 end

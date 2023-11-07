@@ -4,7 +4,7 @@ require_relative "lib/aoc_ruby/version"
 
 Gem::Specification.new do |spec|
   spec.name = "aoc_ruby"
-  spec.version = AocRuby::VERSION
+  spec.version = AoCRuby::VERSION
   spec.authors = ["Vincent Boucheny"]
   spec.email = ["mankalas@gmail.com"]
 
@@ -33,6 +33,7 @@ Gem::Specification.new do |spec|
 
   # Uncomment to register a new dependency of your gem
   spec.add_dependency "parslet", "~> 2.0"
+  spec.add_dependency "bindata"
 
   # For more information and examples about making a new gem, check out our
   # guide at: https://bundler.io/guides/creating_gem.html
