@@ -7,6 +7,7 @@ require "2015/day_04"
 require "2015/day_05"
 require "2015/day_06"
 require "2015/day_07"
+require "2015/day_08"
 
 RSpec.describe "AoC" do
   (2015..2022).each do |year|
